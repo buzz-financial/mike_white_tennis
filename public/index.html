@@ -13,7 +13,17 @@
       <!-- Section 1: Welcome -->
       <div class="section active" id="section-welcome">
         <h2>Welcome to MWTA Tennis Registration</h2>
-        <p>Please review our <a href="#" target="_blank">policies</a> before continuing.</p>
+        <p>Please review our <a href="#" onclick="togglePolicies(event)">policies</a> before continuing.</p>
+
+        <div id="policies-text" class="hidden">
+          <p>
+            BILLING AND CANCELLATIONS POLICY: Our Tennis program runs month to month. Notifications of canceling must be given in writing 30 days in advance. No credits are given for missed classes. Make up lessons can be scheduled with one of the coaches. Enrollment continues until the end of the session, or you withdraw from the program in writing. All payments must be processed before the first registration day. Non-Members must have a credit card on file. Non-members will be charged $5 per day they are registered for the tennis program.
+          </p>
+          <p>
+            I fully understand that my child has registered for Tennis programming at MWTA Bloomington. Registration requires full payment for the class/classes which I enroll before my child will be able to participate. I understand that overdue balances and fees will prevent my child from participating in classes. I give permission to MWTA Bloomington to use images of my child for marketing purposes and programs development. I recognize the fact that any activities involving on court activities creates the possibility of serious injury or death. I give permission for MWTA Bloomington employees to temporarily render first aid in case of emergency. I hereby and forever release MWTA Bloomington, its owners, agents, employees, and volunteers from any claims on any injuries which may be sustained while participating at MWTA Bloomington. I acknowledge these policies and accept these terms for my tennis player.
+          </p>
+        </div>
+                
         <label>
           <input type="checkbox" required>
           I agree to the Billing, Safety, and Media Release Policies
@@ -33,8 +43,9 @@
           <option value="academy">Academy (Invite Only)</option>
         </select>
         <div class="price-info" id="price-blurb"></div>
-        <button type="button" onclick="goToSection('section-details')">Next</button>
-      </div>
+        <button type="button" onclick="goToPrevious('section-program')">Back</button>
+        <button type="button" onclick="goToNext('section-program')">Next</button>
+    </div>
 
       <!-- Section 3: Program Details -->
       <div class="section" id="section-details">
@@ -71,8 +82,9 @@
           <div class="price-info">2 days: $329 | 3 days: $469 | 4 days: $599</div>
         </div>
 
-        <button type="button" onclick="goToSection('section-info')">Next</button>
-      </div>
+        <button type="button" onclick="goToPrevious('section-details')">Back</button>
+        <button type="button" onclick="goToNext('section-details')">Next</button>
+    </div>
 
       <!-- Section 4: Participant Info -->
       <div class="section" id="section-info">
@@ -92,34 +104,14 @@
         <label for="initials">Initial to Confirm Cancellation Policy:</label>
         <input type="text" id="initials" name="initials" required>
 
+        <button type="button" onclick="goToPrevious('section-info')">Back</button>
         <button type="submit">Submit Registration</button>
-      </div>
+    </div>
 
     </form>
   </div>
 
-  <script>
-    function goToSection(sectionId) {
-      const sections = document.querySelectorAll(".section");
-      sections.forEach(sec => sec.classList.remove("active"));
-      document.getElementById(sectionId).classList.add("active");
-    }
 
-    function showProgramDetails(value) {
-      const programSections = document.querySelectorAll(".program-days");
-      programSections.forEach(sec => sec.classList.add("hidden"));
-
-      if (value) {
-        document.getElementById(`${value}-days`).classList.remove("hidden");
-        const priceText = {
-          champions: "1 day: $129 | 2 days: $199 | 3 days: $289 | 4 days: $389",
-          peewee: "1 day: $69 | 2 days: $125",
-          elite: "1 day: $189 | 2 days: $269 | 3 days: $389 | 4 days: $499",
-          academy: "2 days: $329 | 3 days: $469 | 4 days: $599"
-        };
-        document.getElementById("price-blurb").textContent = priceText[value] || '';
-      }
-    }
-  </script>
+  
 </body>
 </html>
