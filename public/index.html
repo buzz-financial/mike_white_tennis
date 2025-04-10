@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MWTA Tennis Registration</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="form-container">
+    <form id="tennisForm">
+
+      <!-- Section 1: Welcome -->
+      <div class="section active" id="section-welcome">
+        <h2>Welcome to MWTA Tennis Registration</h2>
+        <p>Please review our <a href="#" target="_blank">policies</a> before continuing.</p>
+        <label>
+          <input type="checkbox" required>
+          I agree to the Billing, Safety, and Media Release Policies
+        </label>
+        <button type="button" onclick="goToSection('section-program')">Next</button>
+      </div>
+
+      <!-- Section 2: Program Selector -->
+      <div class="section" id="section-program">
+        <h2>Select a Program</h2>
+        <label for="program">Choose your program:</label>
+        <select id="program" name="program" required onchange="showProgramDetails(this.value)">
+          <option value="">-- Select --</option>
+          <option value="champions">Champions (Age ≤12)</option>
+          <option value="peewee">Pee Wee (Age 5–10)</option>
+          <option value="elite">Elite (In/Near High School)</option>
+          <option value="academy">Academy (Invite Only)</option>
+        </select>
+        <div class="price-info" id="price-blurb"></div>
+        <button type="button" onclick="goToSection('section-details')">Next</button>
+      </div>
+
+      <!-- Section 3: Program Details -->
+      <div class="section" id="section-details">
+        <h2>Choose Your Days</h2>
+        
+        <div id="champions-days" class="program-days hidden">
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Monday"> Monday</label>
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday"> Tuesday</label>
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday"> Wednesday</label>
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday"> Thursday</label>
+          <div class="price-info">1 day: $129 | 2 days: $199 | 3 days: $289 | 4 days: $389</div>
+        </div>
+
+        <div id="peewee-days" class="program-days hidden">
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Monday"> Monday</label>
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday"> Wednesday</label>
+          <div class="price-info">1 day: $69 | 2 days: $125</div>
+        </div>
+
+        <div id="elite-days" class="program-days hidden">
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Monday"> Monday</label>
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday"> Tuesday</label>
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday"> Wednesday</label>
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday"> Thursday</label>
+          <div class="price-info">1 day: $189 | 2 days: $269 | 3 days: $389 | 4 days: $499</div>
+        </div>
+
+        <div id="academy-days" class="program-days hidden">
+          <p><strong>Note:</strong> Must have coach permission and active tournament participation.</p>
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Monday"> Monday</label>
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday"> Tuesday</label>
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday"> Wednesday</label>
+          <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday"> Thursday</label>
+          <div class="price-info">2 days: $329 | 3 days: $469 | 4 days: $599</div>
+        </div>
+
+        <button type="button" onclick="goToSection('section-info')">Next</button>
+      </div>
+
+      <!-- Section 4: Participant Info -->
+      <div class="section" id="section-info">
+        <h2>Participant Information</h2>
+        <label for="participantName">Participant's Name:</label>
+        <input type="text" id="participantName" name="participantName" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="responsibleParty">Responsible Party Name:</label>
+        <input type="text" id="responsibleParty" name="responsibleParty" required>
+
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="initials">Initial to Confirm Cancellation Policy:</label>
+        <input type="text" id="initials" name="initials" required>
+
+        <button type="submit">Submit Registration</button>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    function goToSection(sectionId) {
+      const sections = document.querySelectorAll(".section");
+      sections.forEach(sec => sec.classList.remove("active"));
+      document.getElementById(sectionId).classList.add("active");
+    }
+
+    function showProgramDetails(value) {
+      const programSections = document.querySelectorAll(".program-days");
+      programSections.forEach(sec => sec.classList.add("hidden"));
+
+      if (value) {
+        document.getElementById(`${value}-days`).classList.remove("hidden");
+        const priceText = {
+          champions: "1 day: $129 | 2 days: $199 | 3 days: $289 | 4 days: $389",
+          peewee: "1 day: $69 | 2 days: $125",
+          elite: "1 day: $189 | 2 days: $269 | 3 days: $389 | 4 days: $499",
+          academy: "2 days: $329 | 3 days: $469 | 4 days: $599"
+        };
+        document.getElementById("price-blurb").textContent = priceText[value] || '';
+      }
+    }
+  </script>
+</body>
+</html>
