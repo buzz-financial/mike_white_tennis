@@ -12,10 +12,15 @@ function goToNext(currentId) {
   const index = sectionOrder.indexOf(currentId);
   if (index !== -1 && index < sectionOrder.length - 1) {
     if (validateSection(currentId)) {
-      goToSection(sectionOrder[index + 1]);
+      const nextId = sectionOrder[index + 1];
+
+      if (nextId === "section-payment") {
+        updatePaymentSummary(); // call a dedicated function
+      }
+
+      goToSection(nextId);
     }
   } else if (index === sectionOrder.length - 1) {
-    // Final section reached (payment section), handle submission
     document.getElementById("tennisForm").submit();
   }
 }
@@ -51,6 +56,33 @@ function showProgramDetails(value) {
   }
 }
 
+function updatePaymentSummary() {
+  // Program
+  const program = document.getElementById("program");
+  const programText = program.options[program.selectedIndex].text;
+  document.getElementById("summary-program").textContent = programText || "-";
+
+  // Days Selected
+  const visibleDaysSection = document.querySelector(".program-days:not(.hidden)");
+  const checkedDays = visibleDaysSection ? visibleDaysSection.querySelectorAll('input[type="checkbox"]:checked') : [];
+
+  const daysSelected = Array.from(checkedDays).map((cb) => cb.value);
+  document.getElementById("summary-days").textContent = daysSelected.join(", ") || "-";
+
+  // Total Price (from .price-info under visible section)
+  const priceInfo = visibleDaysSection ? visibleDaysSection.querySelector(".price-info").textContent : "";
+
+  let totalPrice = "-";
+  if (priceInfo) {
+    const matches = priceInfo.match(/\$\d+/g);
+    if (matches && daysSelected.length > 0) {
+      totalPrice = matches[daysSelected.length - 1];
+    }
+  }
+
+  document.getElementById("summary-price").textContent = totalPrice;
+}
+
 // payment.js
 document.getElementById("payment-form").addEventListener("submit", function (event) {
   event.preventDefault();
@@ -73,6 +105,36 @@ document.getElementById("payment-form").addEventListener("submit", function (eve
   // Redirect to a confirmation page (for example)
   window.location.href = "payment-confirmation.html";
 });
+
+if (sectionOrder[index + 1] === "section-payment") {
+  // Program
+  const program = document.getElementById("program").value;
+  document.getElementById("summary-program").textContent = program || "-";
+
+  // Days
+  const dayCheckboxes = document.querySelectorAll('.program-days input[type="checkbox"]:checked');
+  const daysSelected = Array.from(dayCheckboxes).map((cb) => cb.value);
+  document.getElementById("summary-days").textContent = daysSelected.join(", ") || "-";
+
+  // Pricing logic
+  let priceText = document.getElementById("price-blurb").textContent;
+  let total = "N/A";
+
+  const numDays = daysSelected.length;
+
+  if (program && numDays > 0) {
+    const priceMatch = priceText.match(/\$\d+/g);
+    if (priceMatch && priceMatch[numDays - 1]) {
+      total = priceMatch[numDays - 1];
+    }
+  }
+
+  document.getElementById("summary-price").textContent = total;
+}
+
+if (!cardNumber.match(/^\d{4} \d{4} \d{4} \d{4}$/)) {
+  document.getElementById("card-number").style.border = "1px solid red";
+}
 
 // Optional: Handle "Save Card" button separately if you want it to function differently
 document.getElementById("save-card-button").addEventListener("click", function () {

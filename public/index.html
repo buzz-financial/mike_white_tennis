@@ -11,6 +11,26 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Condensed+One&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
+    <script>
+      // Format card number
+      new Cleave("#card-number", {
+        creditCard: true,
+      });
+
+      // Format expiry date
+      new Cleave("#expiry-date", {
+        date: true,
+        datePattern: ["m", "y"],
+      });
+
+      // Optional: restrict CVC to 3 digits only
+      new Cleave("#cvc", {
+        numeral: true,
+        numeralPositiveOnly: true,
+        numeralIntegerScale: 4,
+      });
+    </script>
   </head>
   <body>
     <div class="form-container">
@@ -151,15 +171,37 @@
         <div class="section" id="section-payment">
           <h2>Payment Information</h2>
 
+          <!-- Payment Summary -->
+          <div class="payment-summary">
+            <h3>Payment Summary</h3>
+            <p><strong>Program:</strong> <span id="summary-program">-</span></p>
+            <p><strong>Days Selected:</strong> <span id="summary-days">-</span></p>
+            <p><strong>Total Price:</strong> <span id="summary-price">-</span></p>
+          </div>
+
           <div class="card-info">
             <label for="card-number">Card Number</label>
-            <input type="text" id="card-number" name="card-number" placeholder="•••• •••• •••• ••••" required />
+            <input
+              type="text"
+              id="card-number"
+              name="card-number"
+              placeholder="1234 5678 9012 3456"
+              maxlength="19"
+              pattern="\d{4} \d{4} \d{4} \d{4}"
+              required
+            />
+            <small class="card-icons">💳 Accepted: Visa, MasterCard, Amex</small>
 
-            <label for="expiry-date">Expiry Date</label>
-            <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required />
-
-            <label for="cvc">CVC</label>
-            <input type="text" id="cvc" name="cvc" placeholder="•••" required />
+            <div class="card-row">
+              <div class="form-group">
+                <label for="expiry-date">Expiry Date</label>
+                <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required />
+              </div>
+              <div class="form-group">
+                <label for="cvc">CVC</label>
+                <input type="text" id="cvc" name="cvc" placeholder="•••" required />
+              </div>
+            </div>
           </div>
 
           <!-- Billing Info Section -->
@@ -171,18 +213,17 @@
             <input type="email" id="email" name="email" placeholder="youremail@example.com" required />
           </div>
 
+          <!-- Payment Button -->
+          <div class="payment-action">
+            <button type="submit" class="pay-button">Pay Now</button>
+          </div>
+
           <!-- Save Card Option -->
           <div class="save-card-option">
             <label for="save-card">
               <input type="checkbox" id="save-card" name="save-card" />
               Save this card for future use
             </label>
-          </div>
-
-          <!-- Payment Button -->
-          <div class="payment-action">
-            <button type="submit" class="pay-button">Pay Now</button>
-            <button type="button" class="save-card-button" id="save-card-button">Save Card</button>
           </div>
         </div>
       </form>
