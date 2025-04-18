@@ -8,10 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Condensed+One&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Condensed+One&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
     <script>
       // Format card number
       new Cleave("#card-number", {
@@ -40,7 +39,12 @@
       <form id="tennisForm">
         <!-- Section 1: Welcome -->
         <div class="section active" id="section-welcome">
-          <h2>Welcome to MWTA Tennis Registration</h2>
+          <h2>Junior Program Registration</h2>
+          <p>
+            All classes are offered Monday- Thursday in order to maximize your opportunities to play. You child will learn all the skills necessary
+            from beginner to advanced. Our teaching staff is filled with great people that will inspire the players athletically and mentally. The
+            ages below are guidelines. We run a level based program.
+          </p>
           <p>Please review our <a href="#" onclick="togglePolicies(event, 'policies-text')">policies</a> before continuing.</p>
 
           <div id="policies-text" class="hidden">
@@ -63,7 +67,7 @@
 
           <label>
             <input type="checkbox" required />
-            I agree to the Billing, Safety, and Media Release Policies
+            I agree to the Billing and Cancellation Policies
           </label>
           <button type="button" onclick="goToSection('section-program')">Next</button>
         </div>
@@ -173,7 +177,7 @@
 
           <!-- Payment Summary -->
           <div class="payment-summary">
-            <h3>Payment Summary</h3>
+            <h3>Summary:</h3>
             <p><strong>Program:</strong> <span id="summary-program">-</span></p>
             <p><strong>Days Selected:</strong> <span id="summary-days">-</span></p>
             <p><strong>Total Price:</strong> <span id="summary-price">-</span></p>
@@ -210,7 +214,7 @@
             <input type="text" id="full-name" name="full-name" placeholder="John Doe" required />
 
             <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="youremail@example.com" required />
+            <input type="email" id="email" name="email" placeholder="email@example.com" required />
           </div>
 
           <!-- Payment Button -->
