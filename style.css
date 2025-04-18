@@ -106,6 +106,22 @@ button:hover {
   flex: 1;
 }
 
+.last-back-button {
+  background-color: rgb(216, 34, 34);
+}
+
+.last-back-button:hover {
+  background-color: rgb(175, 20, 20);
+}
+
+.pay-button {
+  background-color: rgb(10, 150, 10);
+}
+
+.pay-button:hover {
+  background-color: rgb(8, 121, 8);
+}
+
 .hidden {
   display: none;
 }
