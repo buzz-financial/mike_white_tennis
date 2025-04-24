@@ -45,30 +45,7 @@
             from beginner to advanced. Our teaching staff is filled with great people that will inspire the players athletically and mentally. The
             ages below are guidelines. We run a level based program.
           </p>
-          <p>Please review our <a href="#" onclick="togglePolicies(event, 'policies-text')">policies</a> before continuing.</p>
 
-          <div id="policies-text" class="hidden">
-            <p>
-              BILLING AND CANCELLATIONS POLICY: Our Tennis program runs month to month. Notifications of canceling must be given in writing 30 days in
-              advance. No credits are given for missed classes. Make up lessons can be scheduled with one of the coaches. Enrollment continues until
-              the end of the session, or you withdraw from the program in writing. All payments must be processed before the first registration day.
-              Non-Members must have a credit card on file. Non-members will be charged $5 per day they are registered for the tennis program.
-            </p>
-            <p>
-              I fully understand that my child has registered for Tennis programming at MWTA Bloomington. Registration requires full payment for the
-              class/classes which I enroll before my child will be able to participate. I understand that overdue balances and fees will prevent my
-              child from participating in classes. I give permission to MWTA Bloomington to use images of my child for marketing purposes and programs
-              development. I recognize the fact that any activities involving on court activities creates the possibility of serious injury or death.
-              I give permission for MWTA Bloomington employees to temporarily render first aid in case of emergency. I hereby and forever release MWTA
-              Bloomington, its owners, agents, employees, and volunteers from any claims on any injuries which may be sustained while participating at
-              MWTA Bloomington. I acknowledge these policies and accept these terms for my tennis player.
-            </p>
-          </div>
-
-          <label>
-            <input type="checkbox" required />
-            I agree to the Billing and Cancellation Policies
-          </label>
           <button type="button" onclick="goToSection('section-program')">Next</button>
         </div>
 
@@ -146,10 +123,12 @@
           <label for="email">Email Address:</label>
           <input type="email" id="email" name="email" required />
 
-          <label for="initials">Initial to Confirm <a href="#" onclick="togglePolicies(event, 'policies-text-2')">Cancellation Policy</a>:</label>
-          <input type="text" id="initials" name="initials" required />
+          <label>
+            <input type="checkbox" required />
+            I agree to the <a href="#" onclick="togglePolicies(event, 'policies-text')">Billing and Cancellation Policies</a>
+          </label>
 
-          <div id="policies-text-2" class="hidden">
+          <div id="policies-text" class="hidden">
             <p>
               BILLING AND CANCELLATIONS POLICY: Our Tennis program runs month to month. Notifications of canceling must be given in writing 30 days in
               advance. No credits are given for missed classes. Make up lessons can be scheduled with one of the coaches. Enrollment continues until
