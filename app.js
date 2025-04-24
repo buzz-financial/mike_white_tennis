@@ -1,36 +1,65 @@
-const sectionOrder = ["section-welcome", "section-program", "section-details", "section-info", "section-payment"];
-
 function goToSection(sectionId) {
-  const allSections = document.querySelectorAll(".section");
-  allSections.forEach((section) => section.classList.remove("active"));
+  const allSections = document.querySelectorAll(".section, #section-payment");
+  allSections.forEach((section) => section.classList.add("hidden"));
 
   const currentSection = document.getElementById(sectionId);
-  currentSection.classList.add("active");
+  currentSection.classList.remove("hidden");
+
+  if (sectionId === "section-payment") {
+    updatePaymentSummary();
+  }
 }
 
-function goToNext(currentId) {
-  const index = sectionOrder.indexOf(currentId);
-  if (index !== -1 && index < sectionOrder.length - 1) {
-    if (validateSection(currentId)) {
-      const nextId = sectionOrder[index + 1];
+document.getElementById("program").addEventListener("change", function () {
+  const program = this.value;
+  if (!program) return;
 
-      if (nextId === "section-payment") {
-        updatePaymentSummary(); // call a dedicated function
-      }
+  // Show the days section
+  document.getElementById("section-details").classList.remove("hidden");
 
-      goToSection(nextId);
+  // Optionally update specific days block + pricing
+  showProgramDetails(program);
+});
+
+// Show participant info once at least one day is checked
+document.querySelectorAll('.program-days input[type="checkbox"]').forEach((cb) => {
+  cb.addEventListener("change", () => {
+    const anyDaySelected = Array.from(document.querySelectorAll('.program-days input[type="checkbox"]')).some((cb) => cb.checked);
+
+    const infoSection = document.getElementById("section-info");
+
+    if (anyDaySelected) {
+      infoSection.classList.remove("hidden");
+    } else {
+      infoSection.classList.add("hidden");
+      document.getElementById("checkout-button").classList.add("hidden"); // Also hide the checkout button
     }
-  } else if (index === sectionOrder.length - 1) {
-    document.getElementById("tennisForm").submit();
-  }
+  });
+});
+
+if (!anyDaySelected) {
+  infoSection.classList.add("hidden");
+  document.getElementById("checkout-button").classList.add("hidden");
+
+  // Clear input values
+  ["participantName", "phone", "responsibleParty", "email"].forEach((id) => {
+    document.getElementById(id).value = "";
+  });
+
+  // Uncheck the policy agreement box if needed
+  document.querySelector("#section-info input[type='checkbox']").checked = false;
 }
 
-function goToPrevious(currentId) {
-  const index = sectionOrder.indexOf(currentId);
-  if (index > 0) {
-    goToSection(sectionOrder[index - 1]);
+// Show "Continue to Checkout" button once all fields are filled
+document.getElementById("section-info").addEventListener("input", () => {
+  const fields = ["participantName", "phone", "responsibleParty", "email"];
+  const allFilled = fields.every((id) => document.getElementById(id).value.trim() !== "");
+  const agreed = document.querySelector("#section-info input[type='checkbox']").checked;
+
+  if (allFilled && agreed) {
+    document.getElementById("checkout-button").classList.remove("hidden");
   }
-}
+});
 
 function togglePolicies(event, elementId) {
   event.preventDefault();
@@ -172,13 +201,15 @@ function validateSection(sectionId) {
       break;
 
     case "section-info":
-      const name = document.getElementById("participantName").value;
-      const phone = document.getElementById("phone").value;
-      const email = document.getElementById("email").value;
-      const initials = document.getElementById("initials").value;
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const responsible = document.getElementById("responsibleParty").value.trim();
+      const agreed = document.querySelector("#section-info input[type='checkbox']").checked;
 
-      if (!name || !phone || !email || !initials) {
-        alert("Please fill out all the required fields.");
+      if (!firstName || !lastName || !phone || !email || !responsible || !agreed) {
+        alert("Please complete all participant information and agree to the policies.");
         isValid = false;
       }
       break;

@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Condensed+One&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
     <script>
       // Format card number
       new Cleave("#card-number", {
@@ -37,122 +35,116 @@
         <img src="mike-white-logo-horizontal-blue.png" alt="MWTA Logo" class="logo-image" style="max-width: 75%" />
       </div>
       <form id="tennisForm">
-        <!-- Section 1: Welcome -->
-        <div class="section active" id="section-welcome">
-          <h2>Junior Program Registration</h2>
-          <p>
-            All classes are offered Monday- Thursday in order to maximize your opportunities to play. You child will learn all the skills necessary
-            from beginner to advanced. Our teaching staff is filled with great people that will inspire the players athletically and mentally. The
-            ages below are guidelines. We run a level based program.
-          </p>
-
-          <button type="button" onclick="goToSection('section-program')">Next</button>
-        </div>
-
-        <!-- Section 2: Program Selector -->
-        <div class="section" id="section-program">
-          <h2>Select a Program</h2>
-          <label for="program">Choose your program:</label>
-          <select id="program" name="program" required onchange="showProgramDetails(this.value)">
-            <option value="">-- Select --</option>
-            <option value="champions">Champions (Age ≤12)</option>
-            <option value="peewee">Pee Wee (Age 5–10)</option>
-            <option value="elite">Elite (In/Near High School)</option>
-            <option value="academy">Academy (Invite Only)</option>
-          </select>
-          <div class="price-info" id="price-blurb"></div>
-          <button type="button" onclick="goToPrevious('section-program')">Back</button>
-          <button type="button" onclick="goToNext('section-program')">Next</button>
-        </div>
-
-        <!-- Section 3: Program Details -->
-        <div class="section" id="section-details">
-          <h2>Choose Your Days</h2>
-
-          <div id="champions-days" class="program-days hidden">
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday" /> Tuesday</label>
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday" /> Thursday</label>
-            <br />
-            <div class="price-info">1 day: $129 | 2 days: $199 | 3 days: $289 | 4 days: $389</div>
+        <div class="section active" id="section-registration-information">
+          <h1>Junior Program Registration</h1>
+          <div id="section-program">
+            <label for="program"><h2>Step 1: Choose a Program</h2></label>
+            <select id="program" name="program" required>
+              <option value="">-- Select --</option>
+              <option value="champions">Champions (Age ≤12)</option>
+              <option value="peewee">Pee Wee (Age 5–10)</option>
+              <option value="elite">Elite (In/Near High School)</option>
+              <option value="academy">Academy (Invite Only)</option>
+            </select>
+            <!-- <div class="price-info" id="price-blurb"></div> -->
           </div>
 
-          <div id="peewee-days" class="program-days hidden">
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
-            <br />
-            <div class="price-info">1 day: $69 | 2 days: $125</div>
+          <!-- CHOOSE DAYS -->
+          <div class="section hidden" id="section-details">
+            <h2>Step 2: Select Days</h2>
+
+            <div id="champions-days" class="program-days hidden">
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday" /> Tuesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday" /> Thursday</label>
+              <br />
+              <div class="price-info">1 day: $129 | 2 days: $199 | 3 days: $289 | 4 days: $389</div>
+            </div>
+
+            <div id="peewee-days" class="program-days hidden">
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
+              <br />
+              <div class="price-info">1 day: $69 | 2 days: $125</div>
+            </div>
+
+            <div id="elite-days" class="program-days hidden">
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday" /> Tuesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday" /> Thursday</label>
+              <br />
+              <div class="price-info">1 day: $189 | 2 days: $269 | 3 days: $389 | 4 days: $499</div>
+            </div>
+
+            <div id="academy-days" class="program-days hidden">
+              <p><strong>Note:</strong> Must have coach permission and active tournament participation.</p>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday" /> Tuesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday" /> Thursday</label>
+              <br />
+              <div class="price-info">2 days: $329 | 3 days: $469 | 4 days: $599</div>
+            </div>
           </div>
 
-          <div id="elite-days" class="program-days hidden">
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday" /> Tuesday</label>
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday" /> Thursday</label>
-            <br />
-            <div class="price-info">1 day: $189 | 2 days: $269 | 3 days: $389 | 4 days: $499</div>
+          <!-- PARTICIPANT INFO -->
+          <div class="section hidden" id="section-info">
+            <h2>Step 3: Participant Info</h2>
+
+            <label>Participant's Name:</label>
+            <div class="row-two">
+              <input type="text" id="firstName" name="firstName" placeholder="First Name" required />
+              <input type="text" id="lastName" name="lastName" placeholder="Last Name" required />
+            </div>
+
+            <div class="row-two">
+              <div>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required />
+              </div>
+
+              <div>
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+            </div>
+
+            <label for="responsibleParty">Responsible Party Name:</label>
+            <input type="text" id="responsibleParty" name="responsibleParty" required />
+
+            <label>
+              <input type="checkbox" required />
+              I agree to the <a href="#" onclick="togglePolicies(event, 'policies-text')">Billing and Cancellation Policies</a>
+            </label>
+
+            <div id="policies-text" class="hidden">
+              <p>
+                BILLING AND CANCELLATIONS POLICY: Our Tennis program runs month to month. Notifications of canceling must be given in writing 30 days
+                in advance. No credits are given for missed classes. Make up lessons can be scheduled with one of the coaches. Enrollment continues
+                until the end of the session, or you withdraw from the program in writing. All payments must be processed before the first
+                registration day. Non-Members must have a credit card on file. Non-members will be charged $5 per day they are registered for the
+                tennis program.
+              </p>
+              <p>
+                I fully understand that my child has registered for Tennis programming at MWTA Bloomington. Registration requires full payment for the
+                class/classes which I enroll before my child will be able to participate. I understand that overdue balances and fees will prevent my
+                child from participating in classes. I give permission to MWTA Bloomington to use images of my child for marketing purposes and
+                programs development. I recognize the fact that any activities involving on court activities creates the possibility of serious injury
+                or death. I give permission for MWTA Bloomington employees to temporarily render first aid in case of emergency. I hereby and forever
+                release MWTA Bloomington, its owners, agents, employees, and volunteers from any claims on any injuries which may be sustained while
+                participating at MWTA Bloomington. I acknowledge these policies and accept these terms for my tennis player.
+              </p>
+            </div>
+
+            <button type="button" onclick="goToSection('section-payment')">Continue to Checkout</button>
           </div>
-
-          <div id="academy-days" class="program-days hidden">
-            <p><strong>Note:</strong> Must have coach permission and active tournament participation.</p>
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday" /> Tuesday</label>
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
-            <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday" /> Thursday</label>
-            <br />
-            <div class="price-info">2 days: $329 | 3 days: $469 | 4 days: $599</div>
-          </div>
-
-          <button type="button" onclick="goToPrevious('section-details')">Back</button>
-          <button type="button" onclick="goToNext('section-details')">Next</button>
-        </div>
-
-        <!-- Section 4: Participant Info -->
-        <div class="section" id="section-info">
-          <h2>Participant Information</h2>
-          <label for="participantName">Participant's Name:</label>
-          <input type="text" id="participantName" name="participantName" required />
-
-          <label for="phone">Phone Number:</label>
-          <input type="tel" id="phone" name="phone" required />
-
-          <label for="responsibleParty">Responsible Party Name:</label>
-          <input type="text" id="responsibleParty" name="responsibleParty" required />
-
-          <label for="email">Email Address:</label>
-          <input type="email" id="email" name="email" required />
-
-          <label>
-            <input type="checkbox" required />
-            I agree to the <a href="#" onclick="togglePolicies(event, 'policies-text')">Billing and Cancellation Policies</a>
-          </label>
-
-          <div id="policies-text" class="hidden">
-            <p>
-              BILLING AND CANCELLATIONS POLICY: Our Tennis program runs month to month. Notifications of canceling must be given in writing 30 days in
-              advance. No credits are given for missed classes. Make up lessons can be scheduled with one of the coaches. Enrollment continues until
-              the end of the session, or you withdraw from the program in writing. All payments must be processed before the first registration day.
-              Non-Members must have a credit card on file. Non-members will be charged $5 per day they are registered for the tennis program.
-            </p>
-            <p>
-              I fully understand that my child has registered for Tennis programming at MWTA Bloomington. Registration requires full payment for the
-              class/classes which I enroll before my child will be able to participate. I understand that overdue balances and fees will prevent my
-              child from participating in classes. I give permission to MWTA Bloomington to use images of my child for marketing purposes and programs
-              development. I recognize the fact that any activities involving on court activities creates the possibility of serious injury or death.
-              I give permission for MWTA Bloomington employees to temporarily render first aid in case of emergency. I hereby and forever release MWTA
-              Bloomington, its owners, agents, employees, and volunteers from any claims on any injuries which may be sustained while participating at
-              MWTA Bloomington. I acknowledge these policies and accept these terms for my tennis player.
-            </p>
-          </div>
-
-          <button type="button" onclick="goToPrevious('section-info')">Back</button>
-          <button type="button" onclick="goToNext('section-info')">Next</button>
         </div>
 
         <!-- Section 5: Payment -->
-        <div class="section" id="section-payment">
-          <h2>Payment Information</h2>
+        <div class="hidden" id="section-payment">
+          <h2>Step 4: Payment</h2>
 
           <!-- Payment Summary -->
           <div class="payment-summary">
@@ -199,7 +191,7 @@
           <!-- Payment Button -->
           <div class="payment-action">
             <!-- Back Button -->
-            <button type="button" onclick="goToPrevious('section-payment')" class="last-back-button">Back</button>
+            <button type="button" onclick="goToSection('section-info')" class="last-back-button">Back</button>
             <button type="submit" class="pay-button">Pay Now</button>
           </div>
 
