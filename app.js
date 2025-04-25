@@ -1,13 +1,33 @@
 function goToSection(sectionId) {
-  const allSections = document.querySelectorAll(".section, #section-payment");
+  const allSections = document.querySelectorAll(".section, #section-payment, #section-registration-information");
   allSections.forEach((section) => section.classList.add("hidden"));
 
-  const currentSection = document.getElementById(sectionId);
-  currentSection.classList.remove("hidden");
+  const target = document.getElementById(sectionId);
+  if (target) {
+    target.classList.remove("hidden");
+  }
 
   if (sectionId === "section-payment") {
     updatePaymentSummary();
   }
+}
+
+function showFullForm() {
+  document.getElementById("section-payment").classList.add("hidden");
+  document.getElementById("section-registration-information").classList.remove("hidden");
+
+  // Only re-show sections user already completed
+  const programSelected = document.getElementById("program").value;
+  if (programSelected) {
+    document.getElementById("section-details").classList.remove("hidden");
+  }
+
+  const anyDaySelected = Array.from(document.querySelectorAll('.program-days input[type="checkbox"]:checked')).some((cb) => cb.checked);
+  if (anyDaySelected) {
+    document.getElementById("section-info").classList.remove("hidden");
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 document.getElementById("program").addEventListener("change", function () {
@@ -40,19 +60,11 @@ document.querySelectorAll('.program-days input[type="checkbox"]').forEach((cb) =
 if (!anyDaySelected) {
   infoSection.classList.add("hidden");
   document.getElementById("checkout-button").classList.add("hidden");
-
-  // Clear input values
-  ["participantName", "phone", "responsibleParty", "email"].forEach((id) => {
-    document.getElementById(id).value = "";
-  });
-
-  // Uncheck the policy agreement box if needed
-  document.querySelector("#section-info input[type='checkbox']").checked = false;
 }
 
 // Show "Continue to Checkout" button once all fields are filled
 document.getElementById("section-info").addEventListener("input", () => {
-  const fields = ["participantName", "phone", "responsibleParty", "email"];
+  const fields = ["firstName", "lastName", "phone", "responsibleParty", "email"];
   const allFilled = fields.every((id) => document.getElementById(id).value.trim() !== "");
   const agreed = document.querySelector("#section-info input[type='checkbox']").checked;
 

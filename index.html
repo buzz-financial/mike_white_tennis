@@ -35,9 +35,9 @@
         <img src="mike-white-logo-horizontal-blue.png" alt="MWTA Logo" class="logo-image" style="max-width: 75%" />
       </div>
       <form id="tennisForm">
-        <div class="section active" id="section-registration-information">
+        <div class="section" id="section-registration-information">
           <h1>Junior Program Registration</h1>
-          <div id="section-program">
+          <div id="section-program" class="step-card">
             <label for="program"><h2>Step 1: Choose a Program</h2></label>
             <select id="program" name="program" required>
               <option value="">-- Select --</option>
@@ -50,7 +50,7 @@
           </div>
 
           <!-- CHOOSE DAYS -->
-          <div class="section hidden" id="section-details">
+          <div class="section hidden step-card" id="section-details">
             <h2>Step 2: Select Days</h2>
 
             <div id="champions-days" class="program-days hidden">
@@ -90,7 +90,7 @@
           </div>
 
           <!-- PARTICIPANT INFO -->
-          <div class="section hidden" id="section-info">
+          <div class="section hidden step-card" id="section-info">
             <h2>Step 3: Participant Info</h2>
 
             <label>Participant's Name:</label>
@@ -143,7 +143,7 @@
         </div>
 
         <!-- Section 5: Payment -->
-        <div class="hidden" id="section-payment">
+        <div class="payment-wrapper hidden" id="section-payment">
           <h2>Step 4: Payment</h2>
 
           <!-- Payment Summary -->
@@ -165,7 +165,6 @@
               pattern="\d{4} \d{4} \d{4} \d{4}"
               required
             />
-            <small class="card-icons">💳 Accepted: Visa, MasterCard, Amex</small>
 
             <div class="card-row">
               <div class="form-group">
@@ -177,6 +176,7 @@
                 <input type="text" id="cvc" name="cvc" placeholder="•••" required />
               </div>
             </div>
+            <small class="card-icons">💳 Accepted: Visa, MasterCard, Amex</small>
           </div>
 
           <!-- Billing Info Section -->
@@ -191,7 +191,7 @@
           <!-- Payment Button -->
           <div class="payment-action">
             <!-- Back Button -->
-            <button type="button" onclick="goToSection('section-info')" class="last-back-button">Back</button>
+            <button type="button" onclick="showFullForm()" class="last-back-button">Back</button>
             <button type="submit" class="pay-button">Pay Now</button>
           </div>
 
