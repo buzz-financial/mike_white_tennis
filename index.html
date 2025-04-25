@@ -32,7 +32,7 @@
   <body>
     <div class="form-container">
       <div class="logo-container">
-        <img src="mike-white-logo-horizontal-blue.png" alt="MWTA Logo" class="logo-image" style="max-width: 75%" />
+        <img src="mike-white-logo-horizontal-blue.png" alt="MWTA Logo" class="logo-image" />
       </div>
       <form id="tennisForm">
         <div class="section" id="section-registration-information">
@@ -146,61 +146,79 @@
         <div class="payment-wrapper hidden" id="section-payment">
           <h2>Step 4: Payment</h2>
 
-          <!-- Payment Summary -->
-          <div class="payment-summary">
-            <h3>Summary:</h3>
-            <p><strong>Program:</strong> <span id="summary-program">-</span></p>
-            <p><strong>Days Selected:</strong> <span id="summary-days">-</span></p>
-            <p><strong>Total Price:</strong> <span id="summary-price">-</span></p>
-          </div>
-
-          <div class="card-info">
-            <label for="card-number">Card Number</label>
-            <input
-              type="text"
-              id="card-number"
-              name="card-number"
-              placeholder="1234 5678 9012 3456"
-              maxlength="19"
-              pattern="\d{4} \d{4} \d{4} \d{4}"
-              required
-            />
-
-            <div class="card-row">
-              <div class="form-group">
-                <label for="expiry-date">Expiry Date</label>
-                <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required />
+          <div class="payment-columns">
+            <!-- LEFT COLUMN: Form Fields -->
+            <div class="payment-form-column">
+              <div class="billing-info">
+                <h3>Billing Information</h3>
+                <div class="row-two">
+                  <input type="text" id="billing-first-name" placeholder="First Name" required />
+                  <input type="text" id="billing-last-name" placeholder="Last Name" required />
+                </div>
+                <input type="text" id="billing-address" placeholder="Address" required />
+                <div class="row-two">
+                  <input type="text" id="billing-city" placeholder="City" required />
+                  <input type="text" id="billing-state" placeholder="State" required />
+                </div>
+                <input type="text" id="billing-postal" placeholder="Postal Code" required />
               </div>
-              <div class="form-group">
-                <label for="cvc">CVC</label>
-                <input type="text" id="cvc" name="cvc" placeholder="•••" required />
+
+              <div class="card-info">
+                <h3>Card Information</h3>
+                <input type="text" id="full-name" name="full-name" placeholder="Name on Card" required />
+                <input
+                  type="text"
+                  id="card-number"
+                  name="card-number"
+                  placeholder="1234 5678 9012 3456"
+                  maxlength="19"
+                  pattern="\d{4} \d{4} \d{4} \d{4}"
+                  required
+                />
+                <div class="card-row">
+                  <div class="form-group">
+                    <label for="expiry-date">Expiry Date</label>
+                    <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="cvc">CVC</label>
+                    <input type="text" id="cvc" name="cvc" placeholder="•••" required />
+                  </div>
+                </div>
+                <small class="card-icons">💳 Accepted: Visa, MasterCard, Amex</small>
+              </div>
+
+              <div class="payment-action">
+                <button type="button" onclick="showFullForm()" class="last-back-button">Back</button>
+                <button type="submit" class="pay-button">Pay Now</button>
+              </div>
+
+              <div class="save-card-option">
+                <label for="save-card">
+                  <input type="checkbox" id="save-card" name="save-card" />
+                  Save this card for future use
+                </label>
               </div>
             </div>
-            <small class="card-icons">💳 Accepted: Visa, MasterCard, Amex</small>
-          </div>
 
-          <!-- Billing Info Section -->
-          <div class="billing-info">
-            <label for="full-name">Full Name</label>
-            <input type="text" id="full-name" name="full-name" placeholder="John Doe" required />
-
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="email@example.com" required />
-          </div>
-
-          <!-- Payment Button -->
-          <div class="payment-action">
-            <!-- Back Button -->
-            <button type="button" onclick="showFullForm()" class="last-back-button">Back</button>
-            <button type="submit" class="pay-button">Pay Now</button>
-          </div>
-
-          <!-- Save Card Option -->
-          <div class="save-card-option">
-            <label for="save-card">
-              <input type="checkbox" id="save-card" name="save-card" />
-              Save this card for future use
-            </label>
+            <!-- RIGHT COLUMN: Payment Summary -->
+            <div class="payment-summary-column">
+              <div class="payment-summary">
+                <h3>🧾 Registration Summary</h3>
+                <div class="summary-item">
+                  <span class="summary-label">Program:</span>
+                  <span id="summary-program" class="summary-value">-</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Days Selected:</span>
+                  <span id="summary-days" class="summary-value">-</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Total Price:</span>
+                  <span id="summary-price" class="summary-value total-price">-</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </form>

@@ -30,46 +30,38 @@ function showFullForm() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+// Program selection
 document.getElementById("program").addEventListener("change", function () {
   const program = this.value;
   if (!program) return;
 
-  // Show the days section
   document.getElementById("section-details").classList.remove("hidden");
-
-  // Optionally update specific days block + pricing
   showProgramDetails(program);
 });
 
-// Show participant info once at least one day is checked
+// Show participant info once a day is checked
 document.querySelectorAll('.program-days input[type="checkbox"]').forEach((cb) => {
   cb.addEventListener("change", () => {
-    const anyDaySelected = Array.from(document.querySelectorAll('.program-days input[type="checkbox"]')).some((cb) => cb.checked);
-
+    const anyDaySelected = Array.from(document.querySelectorAll('.program-days input[type="checkbox"]:checked')).length > 0;
     const infoSection = document.getElementById("section-info");
 
     if (anyDaySelected) {
       infoSection.classList.remove("hidden");
     } else {
       infoSection.classList.add("hidden");
-      document.getElementById("checkout-button").classList.add("hidden"); // Also hide the checkout button
+      document.getElementById("checkout-button")?.classList.add("hidden");
     }
   });
 });
 
-if (!anyDaySelected) {
-  infoSection.classList.add("hidden");
-  document.getElementById("checkout-button").classList.add("hidden");
-}
-
-// Show "Continue to Checkout" button once all fields are filled
+// Enable checkout button once all participant fields are filled
 document.getElementById("section-info").addEventListener("input", () => {
   const fields = ["firstName", "lastName", "phone", "responsibleParty", "email"];
-  const allFilled = fields.every((id) => document.getElementById(id).value.trim() !== "");
-  const agreed = document.querySelector("#section-info input[type='checkbox']").checked;
+  const allFilled = fields.every((id) => document.getElementById(id)?.value.trim() !== "");
+  const agreed = document.querySelector("#section-info input[type='checkbox']")?.checked;
 
   if (allFilled && agreed) {
-    document.getElementById("checkout-button").classList.remove("hidden");
+    document.getElementById("checkout-button")?.classList.remove("hidden");
   }
 });
 
@@ -86,33 +78,31 @@ function showProgramDetails(value) {
   programSections.forEach((sec) => sec.classList.add("hidden"));
 
   if (value) {
-    document.getElementById(`${value}-days`).classList.remove("hidden");
+    document.getElementById(`${value}-days`)?.classList.remove("hidden");
     const priceText = {
       champions: "1 day: $129 | 2 days: $199 | 3 days: $289 | 4 days: $389",
       peewee: "1 day: $69 | 2 days: $125",
       elite: "1 day: $189 | 2 days: $269 | 3 days: $389 | 4 days: $499",
       academy: "2 days: $329 | 3 days: $469 | 4 days: $599",
     };
-    document.getElementById("price-blurb").textContent = priceText[value] || "";
+    const priceBlurb = document.getElementById("price-blurb");
+    if (priceBlurb) {
+      priceBlurb.textContent = priceText[value] || "";
+    }
   }
 }
 
 function updatePaymentSummary() {
-  // Program
   const program = document.getElementById("program");
-  const programText = program.options[program.selectedIndex].text;
-  document.getElementById("summary-program").textContent = programText || "-";
+  const programText = program?.options[program.selectedIndex]?.text || "-";
+  document.getElementById("summary-program").textContent = programText;
 
-  // Days Selected
   const visibleDaysSection = document.querySelector(".program-days:not(.hidden)");
   const checkedDays = visibleDaysSection ? visibleDaysSection.querySelectorAll('input[type="checkbox"]:checked') : [];
-
   const daysSelected = Array.from(checkedDays).map((cb) => cb.value);
   document.getElementById("summary-days").textContent = daysSelected.join(", ") || "-";
 
-  // Total Price (from .price-info under visible section)
-  const priceInfo = visibleDaysSection ? visibleDaysSection.querySelector(".price-info").textContent : "";
-
+  const priceInfo = visibleDaysSection ? visibleDaysSection.querySelector(".price-info")?.textContent : "";
   let totalPrice = "-";
   if (priceInfo) {
     const matches = priceInfo.match(/\$\d+/g);
@@ -120,149 +110,67 @@ function updatePaymentSummary() {
       totalPrice = matches[daysSelected.length - 1];
     }
   }
-
   document.getElementById("summary-price").textContent = totalPrice;
 }
 
-// payment.js
-document.getElementById("payment-form").addEventListener("submit", function (event) {
+// Form submission
+document.getElementById("tennisForm").addEventListener("submit", function (event) {
   event.preventDefault();
 
-  const cardNumber = document.getElementById("card-number").value;
-  const expiryDate = document.getElementById("expiry-date").value;
-  const cvc = document.getElementById("cvc").value;
-  const fullName = document.getElementById("full-name").value;
-  const email = document.getElementById("email").value;
-  const saveCard = document.getElementById("save-card").checked;
+  if (validateSection("section-card-info")) {
+    const billingFirstName = document.getElementById("billing-first-name").value.trim();
+    const billingLastName = document.getElementById("billing-last-name").value.trim();
+    const billingAddress = document.getElementById("billing-address").value.trim();
+    const billingCity = document.getElementById("billing-city").value.trim();
+    const billingState = document.getElementById("billing-state").value.trim();
+    const billingPostal = document.getElementById("billing-postal").value.trim();
+    const fullName = document.getElementById("full-name").value.trim();
+    const cardNumber = document.getElementById("card-number").value.trim();
+    const expiryDate = document.getElementById("expiry-date").value.trim();
+    const cvc = document.getElementById("cvc").value.trim();
+    const saveCard = document.getElementById("save-card")?.checked || false;
 
-  // Handle form submission (this is where Stripe API integration goes)
-  console.log("Card Number:", cardNumber);
-  console.log("Expiry Date:", expiryDate);
-  console.log("CVC:", cvc);
-  console.log("Full Name:", fullName);
-  console.log("Email:", email);
-  console.log("Save Card:", saveCard);
+    console.log("Billing First Name:", billingFirstName);
+    console.log("Billing Last Name:", billingLastName);
+    console.log("Billing Address:", billingAddress);
+    console.log("Billing City:", billingCity);
+    console.log("Billing State:", billingState);
+    console.log("Billing Postal:", billingPostal);
+    console.log("Name on Card:", fullName);
+    console.log("Card Number:", cardNumber);
+    console.log("Expiry Date:", expiryDate);
+    console.log("CVC:", cvc);
+    console.log("Save Card:", saveCard);
 
-  // Redirect to a confirmation page (for example)
-  window.location.href = "payment-confirmation.html";
-});
-
-if (sectionOrder[index + 1] === "section-payment") {
-  // Program
-  const program = document.getElementById("program").value;
-  document.getElementById("summary-program").textContent = program || "-";
-
-  // Days
-  const dayCheckboxes = document.querySelectorAll('.program-days input[type="checkbox"]:checked');
-  const daysSelected = Array.from(dayCheckboxes).map((cb) => cb.value);
-  document.getElementById("summary-days").textContent = daysSelected.join(", ") || "-";
-
-  // Pricing logic
-  let priceText = document.getElementById("price-blurb").textContent;
-  let total = "N/A";
-
-  const numDays = daysSelected.length;
-
-  if (program && numDays > 0) {
-    const priceMatch = priceText.match(/\$\d+/g);
-    if (priceMatch && priceMatch[numDays - 1]) {
-      total = priceMatch[numDays - 1];
-    }
+    window.location.href = "payment-confirmation.html";
   }
-
-  document.getElementById("summary-price").textContent = total;
-}
-
-if (!cardNumber.match(/^\d{4} \d{4} \d{4} \d{4}$/)) {
-  document.getElementById("card-number").style.border = "1px solid red";
-}
-
-// Optional: Handle "Save Card" button separately if you want it to function differently
-document.getElementById("save-card-button").addEventListener("click", function () {
-  alert("Your card information will be saved.");
-  // Handle the saving logic (for future integration with Stripe or backend)
 });
 
-// Function to validate the form sections including card information
+// Form Validation
 function validateSection(sectionId) {
   let isValid = true;
 
-  switch (sectionId) {
-    case "section-welcome":
-      const checkbox = document.querySelector('input[type="checkbox"]:checked');
-      if (!checkbox) {
-        alert("You must agree to the policies before continuing.");
+  if (sectionId === "section-card-info") {
+    const billingFields = ["billing-first-name", "billing-last-name", "billing-address", "billing-city", "billing-state", "billing-postal"];
+
+    const cardFields = ["full-name", "card-number", "expiry-date", "cvc"];
+
+    billingFields.forEach((id) => {
+      if (!document.getElementById(id)?.value.trim()) {
         isValid = false;
       }
-      break;
+    });
 
-    case "section-program":
-      const programSelect = document.getElementById("program");
-      if (!programSelect.value) {
-        alert("Please select a program.");
+    cardFields.forEach((id) => {
+      if (!document.getElementById(id)?.value.trim()) {
         isValid = false;
       }
-      break;
+    });
 
-    case "section-details":
-      const programDays = document.querySelectorAll('.program-days input[type="checkbox"]:checked');
-      if (programDays.length === 0) {
-        alert("You must select at least one day for the program.");
-        isValid = false;
-      }
-      break;
-
-    case "section-info":
-      const firstName = document.getElementById("firstName").value.trim();
-      const lastName = document.getElementById("lastName").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const responsible = document.getElementById("responsibleParty").value.trim();
-      const agreed = document.querySelector("#section-info input[type='checkbox']").checked;
-
-      if (!firstName || !lastName || !phone || !email || !responsible || !agreed) {
-        alert("Please complete all participant information and agree to the policies.");
-        isValid = false;
-      }
-      break;
-
-    case "section-card-info":
-      const cardNumber = document.getElementById("card-number").value;
-      const expiryDate = document.getElementById("expiry-date").value;
-      const cvc = document.getElementById("cvc").value;
-
-      if (!cardNumber || !expiryDate || !cvc) {
-        alert("Please fill out your card information.");
-        isValid = false;
-      }
-      break;
+    if (!isValid) {
+      alert("Please complete all billing and card information correctly.");
+    }
   }
 
   return isValid;
 }
-
-// Function to submit payment (Add your actual payment processing logic here)
-document.getElementById("tennisForm").addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  // Validate the entire form before submission
-  if (validateSection("section-card-info")) {
-    const cardNumber = document.getElementById("card-number").value;
-    const expiryDate = document.getElementById("expiry-date").value;
-    const cvc = document.getElementById("cvc").value;
-    const fullName = document.getElementById("full-name").value;
-    const email = document.getElementById("email").value;
-    const saveCard = document.getElementById("save-card").checked;
-
-    // Handle the form submission logic (e.g., with Stripe or backend)
-    console.log("Card Number:", cardNumber);
-    console.log("Expiry Date:", expiryDate);
-    console.log("CVC:", cvc);
-    console.log("Full Name:", fullName);
-    console.log("Email:", email);
-    console.log("Save Card:", saveCard);
-
-    // After submission, you can redirect or show confirmation
-    window.location.href = "payment-confirmation.html";
-  }
-});
