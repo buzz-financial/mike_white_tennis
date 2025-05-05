@@ -1,3 +1,108 @@
+const priceMap = {
+  champions: [129, 199, 289, 389],
+  peewee: [69, 125],
+  elite: [189, 269, 389, 499],
+  academy: [0, 329, 469, 599], // 0 placeholder for 1 day since not allowed
+};
+
+///////////////// VALIDATION /////////////////////
+function showError(inputId, message) {
+  const input = document.getElementById(inputId);
+  const error = document.getElementById(`error-${inputId}`);
+  input.classList.add("invalid");
+  error.textContent = message;
+  error.style.display = "block";
+}
+
+function clearError(inputId) {
+  const input = document.getElementById(inputId);
+  const error = document.getElementById(`error-${inputId}`);
+  input.classList.remove("invalid");
+  error.textContent = "";
+  error.style.display = "none";
+}
+
+["firstName", "lastName", "phone", "email", "responsibleParty"].forEach((id) => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener("blur", () => {
+      if (!el.value.trim()) {
+        showError(id, "This field is required.");
+      } else {
+        clearError(id);
+      }
+    });
+
+    el.addEventListener("input", () => {
+      if (el.value.trim()) {
+        clearError(id);
+      }
+    });
+  }
+});
+
+[
+  "billing-first-name",
+  "billing-last-name",
+  "billing-address",
+  "billing-city",
+  "billing-state",
+  "billing-postal",
+  "full-name",
+  "card-number",
+  "expiry-date",
+  "cvc",
+].forEach((id) => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener("blur", () => {
+      if (!el.value.trim()) {
+        showError(id, "This field is required.");
+      } else {
+        clearError(id);
+      }
+    });
+
+    el.addEventListener("input", () => {
+      if (el.value.trim()) {
+        clearError(id);
+      }
+    });
+  }
+});
+
+function validateSection(sectionId) {
+  let isValid = true;
+
+  if (sectionId === "section-card-info") {
+    const fields = [
+      "billing-first-name",
+      "billing-last-name",
+      "billing-address",
+      "billing-city",
+      "billing-state",
+      "billing-postal",
+      "full-name",
+      "card-number",
+      "expiry-date",
+      "cvc",
+    ];
+
+    fields.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el?.value.trim()) {
+        showError(id, "This field is required.");
+        isValid = false;
+      } else {
+        clearError(id);
+      }
+    });
+  }
+
+  return isValid;
+}
+
+///////////////// NAVIGATION /////////////////////
 function goToSection(sectionId) {
   const allSections = document.querySelectorAll(".section, #section-payment, #section-registration-information");
   allSections.forEach((section) => section.classList.add("hidden"));
@@ -93,8 +198,9 @@ function showProgramDetails(value) {
 }
 
 function updatePaymentSummary() {
-  const program = document.getElementById("program");
-  const programText = program?.options[program.selectedIndex]?.text || "-";
+  const programSelect = document.getElementById("program");
+  const programValue = programSelect?.value || "";
+  const programText = programSelect?.options[programSelect.selectedIndex]?.text || "-";
   document.getElementById("summary-program").textContent = programText;
 
   const visibleDaysSection = document.querySelector(".program-days:not(.hidden)");
@@ -102,14 +208,11 @@ function updatePaymentSummary() {
   const daysSelected = Array.from(checkedDays).map((cb) => cb.value);
   document.getElementById("summary-days").textContent = daysSelected.join(", ") || "-";
 
-  const priceInfo = visibleDaysSection ? visibleDaysSection.querySelector(".price-info")?.textContent : "";
   let totalPrice = "-";
-  if (priceInfo) {
-    const matches = priceInfo.match(/\$\d+/g);
-    if (matches && daysSelected.length > 0) {
-      totalPrice = matches[daysSelected.length - 1];
-    }
+  if (programValue && priceMap[programValue] && daysSelected.length > 0) {
+    totalPrice = `$${priceMap[programValue][daysSelected.length - 1]}` || "-";
   }
+
   document.getElementById("summary-price").textContent = totalPrice;
 }
 
@@ -145,32 +248,3 @@ document.getElementById("tennisForm").addEventListener("submit", function (event
     window.location.href = "payment-confirmation.html";
   }
 });
-
-// Form Validation
-function validateSection(sectionId) {
-  let isValid = true;
-
-  if (sectionId === "section-card-info") {
-    const billingFields = ["billing-first-name", "billing-last-name", "billing-address", "billing-city", "billing-state", "billing-postal"];
-
-    const cardFields = ["full-name", "card-number", "expiry-date", "cvc"];
-
-    billingFields.forEach((id) => {
-      if (!document.getElementById(id)?.value.trim()) {
-        isValid = false;
-      }
-    });
-
-    cardFields.forEach((id) => {
-      if (!document.getElementById(id)?.value.trim()) {
-        isValid = false;
-      }
-    });
-
-    if (!isValid) {
-      alert("Please complete all billing and card information correctly.");
-    }
-  }
-
-  return isValid;
-}

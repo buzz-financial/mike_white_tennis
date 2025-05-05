@@ -65,6 +65,22 @@ select {
   border: 1px solid #ddd;
   padding: 14px;
   font-size: 1rem;
+  background-color: white;
+}
+
+#billing-state {
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  padding: 14px;
+  font-size: 1rem;
+  background-color: white;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5); /* or 1.75 for even bigger */
+  margin-right: 8px;
+  accent-color: #4f46e5; /* optional: match your button color */
+  cursor: pointer;
 }
 
 input:focus {
@@ -103,8 +119,8 @@ button:hover {
   flex: 1;
 }
 
-#responsibleParty {
-  margin-bottom: 25px;
+#checkBox {
+  margin-top: 20px;
 }
 
 #section-payment {
@@ -238,25 +254,20 @@ small.card-icons {
 
 .payment-columns {
   display: flex;
-  gap: 40px;
-  justify-content: center;
+  gap: 60px; /* Increased from 40px */
   align-items: flex-start;
-  flex-wrap: wrap;
-  margin-top: 20px;
+  justify-content: space-between;
 }
 
 .payment-form-column {
   flex: 1;
-  min-width: 300px;
-  max-width: 500px;
+  max-width: 580px;
 }
 
 .payment-summary-column {
-  flex: 0 0 300px;
-  max-width: 350px;
+  position: sticky;
+  top: 30px;
   background: #f9fafb;
-  padding: 25px;
-  border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
@@ -271,7 +282,6 @@ small.card-icons {
   flex: 1;
   font-size: 1rem;
   padding: 12px;
-  border-radius: 8px;
 }
 
 .last-back-button {
@@ -291,6 +301,18 @@ small.card-icons {
 }
 
 .hidden {
+  display: none;
+}
+
+input.invalid {
+  border: 2px solid #ef4444; /* Red border */
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  margin-bottom: 6px;
   display: none;
 }
 
