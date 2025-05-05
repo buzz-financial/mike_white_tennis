@@ -94,13 +94,13 @@
             <h2>Step 3: Participant Info</h2>
             <div class="row-two">
               <div>
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" required />
-                <div class="error-message" id="error-firstName"></div>
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" />
+                <div class="error-message" id="error-firstName">This field is required.</div>
               </div>
 
               <div>
-                <label for="lastName">Last Name:</label>
+                <label for="lastName">Last Name</label>
                 <input type="text" id="lastName" name="lastName" required />
                 <div class="error-message" id="error-lastName"></div>
               </div>
@@ -108,19 +108,19 @@
 
             <div class="row-two">
               <div>
-                <label for="phone">Phone Number:</label>
+                <label for="phone">Phone Number</label>
                 <input type="tel" id="phone" name="phone" required />
                 <div class="error-message" id="error-phone"></div>
               </div>
 
               <div>
-                <label for="email">Email Address:</label>
+                <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" required />
                 <div class="error-message" id="error-email"></div>
               </div>
             </div>
 
-            <label for="responsibleParty">Responsible Party Name:</label>
+            <label for="responsibleParty">Responsible Party Name</label>
             <input type="text" id="responsibleParty" name="responsibleParty" required />
             <div class="error-message" id="error-responsibleParty"></div>
 
@@ -159,32 +159,37 @@
           <div class="payment-columns">
             <!-- LEFT COLUMN: Form Fields -->
             <div class="payment-form-column">
-              <div class="billing-info">
-                <h3>Billing Information</h3>
+              <fieldset class="billing-info">
+                <legend><h3>Billing Information</h3></legend>
 
                 <div class="row-two">
                   <div>
-                    <input type="text" id="billing-first-name" placeholder="First Name" required />
+                    <label for="billing-first-name">First Name</label>
+                    <input type="text" id="billing-first-name" required />
                     <div class="error-message" id="error-billing-first-name"></div>
                   </div>
-
                   <div>
-                    <input type="text" id="billing-last-name" placeholder="Last Name" required />
+                    <label for="billing-last-name">Last Name</label>
+                    <input type="text" id="billing-last-name" required />
                     <div class="error-message" id="error-billing-last-name"></div>
                   </div>
                 </div>
 
-                <input type="text" id="billing-address" placeholder="Address" required />
-                <div class="error-message" id="error-billing-address"></div>
+                <div>
+                  <label for="billing-address">Street Address</label>
+                  <input type="text" id="billing-address" required />
+                  <div class="error-message" id="error-billing-address"></div>
+                </div>
 
                 <div class="row-two">
                   <div>
-                    <input type="text" id="billing-city" placeholder="City" required />
+                    <label for="billing-city">City</label>
+                    <input type="text" id="billing-city" required />
                     <div class="error-message" id="error-billing-city"></div>
                   </div>
-
                   <div>
                     <select id="billing-state" required>
+                      <option value="">State</option>
                       <option value="">Select a State</option>
                       <option value="AL">Alabama</option>
                       <option value="AK">Alaska</option>
@@ -238,51 +243,47 @@
                       <option value="WY">Wyoming</option>
                     </select>
                     <div class="error-message" id="error-billing-state"></div>
-
-                    <div class="error-message" id="error-billing-state"></div>
                   </div>
                 </div>
 
-                <input type="text" id="billing-postal" placeholder="Postal Code" required />
-                <div class="error-message" id="error-billing-postal"></div>
-              </div>
+                <div>
+                  <label for="billing-postal">ZIP Code</label>
+                  <input type="text" id="billing-postal" required />
+                  <div class="error-message" id="error-billing-postal"></div>
+                </div>
+              </fieldset>
 
-              <div class="card-info">
-                <h3>Card Information</h3>
-                <input type="text" id="full-name" name="full-name" placeholder="Name on Card" required />
+              <fieldset class="card-info">
+                <legend><h3>Card Information</h3></legend>
+
+                <input type="text" id="full-name" placeholder="Name on Card" required />
                 <div class="error-message" id="error-full-name"></div>
-                <input
-                  type="text"
-                  id="card-number"
-                  name="card-number"
-                  placeholder="1234 5678 9012 3456"
-                  maxlength="19"
-                  pattern="\d{4} \d{4} \d{4} \d{4}"
-                  required
-                />
+
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required />
                 <div class="error-message" id="error-card-number"></div>
+
                 <div class="card-row">
                   <div class="form-group">
-                    <label for="expiry-date">Expiry Date</label>
-                    <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required />
+                    <label for="expiry-date">Expiry</label>
+                    <input type="text" id="expiry-date" placeholder="MM/YY" required />
                     <div class="error-message" id="error-expiry-date"></div>
                   </div>
                   <div class="form-group">
                     <label for="cvc">CVC</label>
-                    <input type="text" id="cvc" name="cvc" placeholder="•••" required />
+                    <input type="text" id="cvc" placeholder="•••" required />
                     <div class="error-message" id="error-cvc"></div>
                   </div>
                 </div>
-              </div>
+              </fieldset>
 
               <div class="payment-action">
-                <button type="button" onclick="showFullForm()" class="last-back-button">Back</button>
-                <button type="submit" class="pay-button">Pay Now</button>
+                <button type="button" id="back-to-info" class="last-back-button">Back</button>
+                <button type="submit" id="pay-now" class="pay-button">Pay Now</button>
               </div>
             </div>
 
             <!-- RIGHT COLUMN: Payment Summary -->
-            <div class="payment-summary-column">
+            <aside class="payment-summary-column">
               <div class="payment-summary">
                 <h3>🧾 Registration Summary</h3>
                 <div class="summary-item">
@@ -290,15 +291,15 @@
                   <span id="summary-program" class="summary-value">-</span>
                 </div>
                 <div class="summary-item">
-                  <span class="summary-label">Days Selected:</span>
+                  <span class="summary-label">Days:</span>
                   <span id="summary-days" class="summary-value">-</span>
                 </div>
                 <div class="summary-item">
-                  <span class="summary-label">Total Price:</span>
+                  <span class="summary-label">Total:</span>
                   <span id="summary-price" class="summary-value total-price">-</span>
                 </div>
               </div>
-            </div>
+            </aside>
           </div>
         </div>
       </form>

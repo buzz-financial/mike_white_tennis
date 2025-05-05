@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MWTA Tennis Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@3.5.0/dist/vuetify.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@3.5.0/dist/vuetify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <v-app>
+        <v-main>
+          <div class="logo-container">
+            <img src="../mike-white-logo-horizontal-blue.png" alt="MWTA Logo" class="logo-image" />
+          </div>
+
+          <v-container>
+            <v-stepper v-model="step">
+              <!-- Step 1: Choose Program -->
+              <v-stepper-header>
+                <v-stepper-item :value="1" title="Program"></v-stepper-item>
+                <v-stepper-item :value="2" title="Days"></v-stepper-item>
+                <v-stepper-item :value="3" title="Participant Info"></v-stepper-item>
+                <v-stepper-item :value="4" title="Payment"></v-stepper-item>
+              </v-stepper-header>
+
+              <v-stepper-window>
+                <v-stepper-window-item :value="1">
+                  <v-card flat>
+                    <v-card-title>Choose a Program</v-card-title>
+                    <v-select v-model="form.program" :items="programs" item-title="label" item-value="value" label="Program" required></v-select>
+                    <v-btn @click="step = 2" :disabled="!form.program" class="mt-4" color="primary">Continue</v-btn>
+                  </v-card>
+                </v-stepper-window-item>
+
+                <v-stepper-window-item :value="2">
+                  <v-card flat>
+                    <v-card-title>Select Desired Days</v-card-title>
+                    <v-row>
+                      <v-col v-for="day in programDays" :key="day" cols="12" sm="6" md="3">
+                        <v-card
+                          :elevation="form.days.includes(day) ? 4 : 1"
+                          :color="form.days.includes(day) ? 'primary' : 'white'"
+                          class="pa-4 text-center"
+                          style="cursor: pointer"
+                          @click="toggleDay(day)"
+                        >
+                          <v-icon v-if="form.days.includes(day)" color="white" class="mb-2" size="28"> mdi-check-circle </v-icon>
+                          <v-icon v-else color="grey" class="mb-2" size="28"> mdi-checkbox-blank-circle-outline </v-icon>
+                          <div class="text-subtitle-1" :class="{ 'text-white': form.days.includes(day) }">{{ day }}</div>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+                    <v-sheet class="mt-6 text-center" color="blue-lighten-4" elevation="1" rounded max-width="300" style="margin-inline: auto">
+                      <v-row class="pa-4 align-center justify-center">
+                        <v-icon color="primary" class="me-2">mdi-cash</v-icon>
+                        <span class="text-h6 font-weight-medium">{{ priceInfo }}</span>
+                      </v-row>
+                    </v-sheet>
+
+                    <v-btn class="mt-4 me-2" @click="step = 1">Back</v-btn>
+                    <v-btn class="mt-4" color="primary" @click="step = 3">Continue</v-btn>
+                  </v-card>
+                </v-stepper-window-item>
+
+                <v-stepper-window-item :value="3">
+                  <v-card flat>
+                    <v-card-title>Participant Info</v-card-title>
+                    <v-text-field label="First Name" v-model="form.firstName" required></v-text-field>
+                    <v-text-field label="Last Name" v-model="form.lastName" required></v-text-field>
+                    <v-text-field label="Phone Number" v-model="form.phone" required></v-text-field>
+                    <v-text-field label="Email Address" v-model="form.email" required></v-text-field>
+                    <v-text-field label="Responsible Party" v-model="form.responsibleParty" required></v-text-field>
+                    <v-checkbox v-model="form.agreePolicies" label="I agree to the Billing and Cancellation Policies" required></v-checkbox>
+                    <v-btn class="mt-4 me-2" @click="step = 2">Back</v-btn>
+                    <v-btn class="mt-4" color="primary" :disabled="!form.agreePolicies" @click="step = 4">Continue to Checkout</v-btn>
+                  </v-card>
+                </v-stepper-window-item>
+
+                <v-stepper-window-item :value="4">
+                  <v-card flat>
+                    <v-card-title>Payment</v-card-title>
+                    <v-row>
+                      <v-col cols="12" md="6">
+                        <v-text-field label="Billing First Name" v-model="form.billingFirstName" required></v-text-field>
+                      </v-col>
+                      <v-col cols="12" md="6">
+                        <v-text-field label="Billing Last Name" v-model="form.billingLastName" required></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field label="Street Address" v-model="form.billingAddress" required></v-text-field>
+                      </v-col>
+                      <v-col cols="12" md="6">
+                        <v-text-field label="City" v-model="form.billingCity" required></v-text-field>
+                      </v-col>
+                      <v-col cols="6" md="3">
+                        <v-select :items="states" v-model="form.billingState" label="State" required></v-select>
+                      </v-col>
+                      <v-col cols="6" md="3">
+                        <v-text-field label="ZIP Code" v-model="form.billingPostal" required></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-divider class="my-4"></v-divider>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field label="Name on Card" v-model="form.cardName" required></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field label="Card Number" v-model="form.cardNumber" required></v-text-field>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field label="Expiry (MM/YY)" v-model="form.expiry" required></v-text-field>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field label="CVC" v-model="form.cvc" required></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-btn class="mt-4 me-2" @click="step = 3">Back</v-btn>
+                    <v-btn class="mt-4" color="primary" @click="submitForm">Pay Now</v-btn>
+                  </v-card>
+                </v-stepper-window-item>
+              </v-stepper-window>
+            </v-stepper>
+          </v-container>
+        </v-main>
+      </v-app>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

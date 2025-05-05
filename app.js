@@ -71,33 +71,31 @@ function clearError(inputId) {
   }
 });
 
-function validateSection(sectionId) {
+function validatePaymentFields() {
+  const fields = [
+    "billing-first-name",
+    "billing-last-name",
+    "billing-address",
+    "billing-city",
+    "billing-state",
+    "billing-postal",
+    "full-name",
+    "card-number",
+    "expiry-date",
+    "cvc",
+  ];
+
   let isValid = true;
 
-  if (sectionId === "section-card-info") {
-    const fields = [
-      "billing-first-name",
-      "billing-last-name",
-      "billing-address",
-      "billing-city",
-      "billing-state",
-      "billing-postal",
-      "full-name",
-      "card-number",
-      "expiry-date",
-      "cvc",
-    ];
-
-    fields.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el?.value.trim()) {
-        showError(id, "This field is required.");
-        isValid = false;
-      } else {
-        clearError(id);
-      }
-    });
-  }
+  fields.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el?.value.trim()) {
+      showError(id, "This field is required.");
+      isValid = false;
+    } else {
+      clearError(id);
+    }
+  });
 
   return isValid;
 }
@@ -154,7 +152,6 @@ document.querySelectorAll('.program-days input[type="checkbox"]').forEach((cb) =
       infoSection.classList.remove("hidden");
     } else {
       infoSection.classList.add("hidden");
-      document.getElementById("checkout-button")?.classList.add("hidden");
     }
   });
 });
@@ -166,7 +163,6 @@ document.getElementById("section-info").addEventListener("input", () => {
   const agreed = document.querySelector("#section-info input[type='checkbox']")?.checked;
 
   if (allFilled && agreed) {
-    document.getElementById("checkout-button")?.classList.remove("hidden");
   }
 });
 
@@ -220,7 +216,7 @@ function updatePaymentSummary() {
 document.getElementById("tennisForm").addEventListener("submit", function (event) {
   event.preventDefault();
 
-  if (validateSection("section-card-info")) {
+  if (validatePaymentFields()) {
     const billingFirstName = document.getElementById("billing-first-name").value.trim();
     const billingLastName = document.getElementById("billing-last-name").value.trim();
     const billingAddress = document.getElementById("billing-address").value.trim();
@@ -231,7 +227,6 @@ document.getElementById("tennisForm").addEventListener("submit", function (event
     const cardNumber = document.getElementById("card-number").value.trim();
     const expiryDate = document.getElementById("expiry-date").value.trim();
     const cvc = document.getElementById("cvc").value.trim();
-    const saveCard = document.getElementById("save-card")?.checked || false;
 
     console.log("Billing First Name:", billingFirstName);
     console.log("Billing Last Name:", billingLastName);
@@ -243,7 +238,6 @@ document.getElementById("tennisForm").addEventListener("submit", function (event
     console.log("Card Number:", cardNumber);
     console.log("Expiry Date:", expiryDate);
     console.log("CVC:", cvc);
-    console.log("Save Card:", saveCard);
 
     window.location.href = "payment-confirmation.html";
   }

@@ -1,0 +1,12 @@
+body {
+  font-family: "Roboto", sans-serif;
+}
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+.logo-image {
+  max-width: 250px;
+  height: auto;
+}
