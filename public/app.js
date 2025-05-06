@@ -13,6 +13,7 @@ createApp({
         { label: "Academy (Invite Only)", value: "academy" },
       ],
       form: {
+        agreePolicies: false,
         program: "",
         days: [],
         firstName: "",
@@ -32,6 +33,7 @@ createApp({
         expiry: "",
         cvc: "",
       },
+      showPolicies: false,
       states: [
         "AL",
         "AK",

@@ -31,7 +31,7 @@
 
               <v-stepper-window>
                 <v-stepper-window-item :value="1">
-                  <v-card flat>
+                  <v-card flat class="pa-4">
                     <v-card-title>Choose a Program</v-card-title>
                     <v-select v-model="form.program" :items="programs" item-title="label" item-value="value" label="Program" required></v-select>
                     <v-btn @click="step = 2" :disabled="!form.program" class="mt-4" color="primary">Continue</v-btn>
@@ -39,7 +39,7 @@
                 </v-stepper-window-item>
 
                 <v-stepper-window-item :value="2">
-                  <v-card flat>
+                  <v-card flat class="pa-4">
                     <v-card-title>Select Desired Days</v-card-title>
                     <v-row>
                       <v-col v-for="day in programDays" :key="day" cols="12" sm="6" md="3">
@@ -56,11 +56,15 @@
                         </v-card>
                       </v-col>
                     </v-row>
-                    <v-sheet class="mt-6 text-center" color="blue-lighten-4" elevation="1" rounded max-width="300" style="margin-inline: auto">
-                      <v-row class="pa-4 align-center justify-center">
-                        <v-icon color="primary" class="me-2">mdi-cash</v-icon>
-                        <span class="text-h6 font-weight-medium">{{ priceInfo }}</span>
-                      </v-row>
+                    <v-sheet
+                      elevation="2"
+                      color="blue-lighten-5"
+                      rounded="lg"
+                      class="mt-4 pa-3 mx-auto text-center d-flex flex-column align-center justify-center"
+                      max-width="280"
+                    >
+                      <v-icon color="primary" size="24" class="mb-1">mdi-cash</v-icon>
+                      <div class="text-subtitle-2 font-weight-medium" :class="{ 'text-error': priceInfo.includes('valid') }">{{ priceInfo }}</div>
                     </v-sheet>
 
                     <v-btn class="mt-4 me-2" @click="step = 1">Back</v-btn>
@@ -69,59 +73,164 @@
                 </v-stepper-window-item>
 
                 <v-stepper-window-item :value="3">
-                  <v-card flat>
+                  <v-card flat class="pa-4">
                     <v-card-title>Participant Info</v-card-title>
-                    <v-text-field label="First Name" v-model="form.firstName" required></v-text-field>
-                    <v-text-field label="Last Name" v-model="form.lastName" required></v-text-field>
-                    <v-text-field label="Phone Number" v-model="form.phone" required></v-text-field>
-                    <v-text-field label="Email Address" v-model="form.email" required></v-text-field>
-                    <v-text-field label="Responsible Party" v-model="form.responsibleParty" required></v-text-field>
-                    <v-checkbox v-model="form.agreePolicies" label="I agree to the Billing and Cancellation Policies" required></v-checkbox>
+
+                    <v-row>
+                      <v-col cols="12" md="6">
+                        <v-text-field label="First Name" v-model="form.firstName" required></v-text-field>
+                      </v-col>
+                      <v-col cols="12" md="6">
+                        <v-text-field label="Last Name" v-model="form.lastName" required></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" md="6">
+                        <v-text-field label="Phone Number" v-model="form.phone" required></v-text-field>
+                      </v-col>
+                      <v-col cols="12" md="6">
+                        <v-text-field label="Email Address" v-model="form.email" required></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12" md="6">
+                        <v-text-field label="Responsible Party" v-model="form.responsibleParty" required></v-text-field>
+                      </v-col>
+
+                      <v-col cols="12">
+                        <v-checkbox v-model="form.agreePolicies" required hide-details :label="''">
+                          <template #label>
+                            <div>
+                              I agree to the
+                              <a href="#" @click.prevent="showPolicies = !showPolicies">Billing and Cancellation Policies</a>
+                            </div>
+                          </template>
+                        </v-checkbox>
+
+                        <v-expand-transition>
+                          <div v-if="showPolicies" class="mt-2 pa-4 rounded elevation-1" style="background-color: #f9f9f9">
+                            <p>
+                              <strong>Billing and Cancellation Policy:</strong> Our Tennis program runs month to month. Notifications of canceling
+                              must be given in writing 30 days in advance. No credits are given for missed classes. Make up lessons can be scheduled
+                              with one of the coaches. Enrollment continues until the end of the session or withdrawal is submitted in writing.
+                            </p>
+                            <p>
+                              All payments must be processed before the first registration day. Non-Members must have a credit card on file and will
+                              be charged $5 per day registered. I understand these policies and accept them for my tennis player.
+                            </p>
+                          </div>
+                        </v-expand-transition>
+                      </v-col>
+                    </v-row>
+
                     <v-btn class="mt-4 me-2" @click="step = 2">Back</v-btn>
                     <v-btn class="mt-4" color="primary" :disabled="!form.agreePolicies" @click="step = 4">Continue to Checkout</v-btn>
                   </v-card>
                 </v-stepper-window-item>
 
                 <v-stepper-window-item :value="4">
-                  <v-card flat>
+                  <v-card flat class="pa-4 pb-8">
                     <v-card-title>Payment</v-card-title>
+
                     <v-row>
-                      <v-col cols="12" md="6">
-                        <v-text-field label="Billing First Name" v-model="form.billingFirstName" required></v-text-field>
+                      <!-- Registration Summary -->
+                      <v-col cols="12" md="4" order="1" order-md="2">
+                        <v-slide-y-transition>
+                          <v-sheet elevation="4" rounded="lg" class="pa-4 mb-6" color="blue-lighten-5">
+                            <h3 class="text-h6 mb-3">Registration Summary</h3>
+                            <p><strong>Program:</strong> {{ programs.find(p => p.value === form.program)?.label }}</p>
+                            <p><strong>Days:</strong> {{ form.days.join(', ') }}</p>
+                            <p><strong>Participant:</strong> {{ form.firstName }} {{ form.lastName }}</p>
+                            <p><strong>Total:</strong> {{ priceInfo }}</p>
+                          </v-sheet>
+                        </v-slide-y-transition>
                       </v-col>
-                      <v-col cols="12" md="6">
-                        <v-text-field label="Billing Last Name" v-model="form.billingLastName" required></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field label="Street Address" v-model="form.billingAddress" required></v-text-field>
-                      </v-col>
-                      <v-col cols="12" md="6">
-                        <v-text-field label="City" v-model="form.billingCity" required></v-text-field>
-                      </v-col>
-                      <v-col cols="6" md="3">
-                        <v-select :items="states" v-model="form.billingState" label="State" required></v-select>
-                      </v-col>
-                      <v-col cols="6" md="3">
-                        <v-text-field label="ZIP Code" v-model="form.billingPostal" required></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-divider class="my-4"></v-divider>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field label="Name on Card" v-model="form.cardName" required></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field label="Card Number" v-model="form.cardNumber" required></v-text-field>
-                      </v-col>
-                      <v-col cols="6">
-                        <v-text-field label="Expiry (MM/YY)" v-model="form.expiry" required></v-text-field>
-                      </v-col>
-                      <v-col cols="6">
-                        <v-text-field label="CVC" v-model="form.cvc" required></v-text-field>
+
+                      <!-- Billing + Card Info -->
+                      <v-col cols="12" md="8" order="2" order-md="1">
+                        <!-- Billing Info -->
+                        <v-sheet elevation="4" rounded="lg" class="pa-6 mb-6" color="grey-lighten-5">
+                          <h4 class="text-subtitle-1 font-weight-medium mb-4">Billing Information</h4>
+                          <v-row>
+                            <v-col cols="12" md="6">
+                              <v-text-field label="First Name" v-model="form.billingFirstName" required></v-text-field>
+                            </v-col>
+                            <v-col cols="12" md="6">
+                              <v-text-field label="Last Name" v-model="form.billingLastName" required></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-text-field label="Street Address" v-model="form.billingAddress" required></v-text-field>
+                            </v-col>
+                            <v-col cols="12" md="6">
+                              <v-text-field label="City" v-model="form.billingCity" required></v-text-field>
+                            </v-col>
+                            <v-col cols="6" md="3">
+                              <v-select :items="states" v-model="form.billingState" label="State" required></v-select>
+                            </v-col>
+                            <v-col cols="6" md="3">
+                              <v-text-field label="ZIP Code" type="tel" v-model="form.billingPostal" required></v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-sheet>
+
+                        <!-- Card Info -->
+                        <v-sheet elevation="4" rounded="lg" class="pa-6 mb-6" color="grey-lighten-5">
+                          <h4 class="text-subtitle-1 font-weight-medium mb-4">Card Information</h4>
+                          <v-row>
+                            <v-col cols="12">
+                              <v-text-field label="Name on Card" v-model="form.cardName" required></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-text-field
+                                label="Card Number"
+                                v-model="form.cardNumber"
+                                hint="No dashes or spaces"
+                                persistent-hint
+                                type="tel"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="6">
+                              <v-text-field
+                                label="Expiry (MM/YY)"
+                                v-model="form.expiry"
+                                hint="Format: MM/YY"
+                                persistent-hint
+                                type="tel"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="6">
+                              <v-text-field label="CVC" v-model="form.cvc" hint="3 or 4 digits" persistent-hint type="tel" required></v-text-field>
+                            </v-col>
+                          </v-row>
+
+                          <v-row class="mt-2 mb-2">
+                            <v-col cols="12" class="text-center">
+                              <v-img src="https://img.icons8.com/color/48/visa.png" height="24" class="me-2" />
+                              <v-img src="https://img.icons8.com/color/48/mastercard.png" height="24" class="me-2" />
+                              <v-img src="https://img.icons8.com/color/48/amex.png" height="24" />
+                            </v-col>
+                          </v-row>
+                        </v-sheet>
+
+                        <!-- Buttons -->
+                        <v-row class="px-1">
+                          <v-col cols="3">
+                            <v-btn block variant="outlined" @click="step = 3">Back</v-btn>
+                          </v-col>
+                          <v-col cols="9">
+                            <v-btn block color="success" size="large" @click="submitForm">Pay {{ priceInfo }}</v-btn>
+                          </v-col>
+                        </v-row>
+
+                        <v-col cols="12">
+                          <p class="text-center text-caption mt-4">
+                            By proceeding, you agree to our
+                            <a href="#">Terms</a> and <a href="#">Privacy Policy</a>. Need help?
+                            <a href="mailto:support@mwta.com">Contact support</a>.
+                          </p>
+                        </v-col>
                       </v-col>
                     </v-row>
-                    <v-btn class="mt-4 me-2" @click="step = 3">Back</v-btn>
-                    <v-btn class="mt-4" color="primary" @click="submitForm">Pay Now</v-btn>
                   </v-card>
                 </v-stepper-window-item>
               </v-stepper-window>
