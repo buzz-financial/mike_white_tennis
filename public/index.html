@@ -44,9 +44,8 @@
                     <v-row>
                       <v-col v-for="day in programDays" :key="day" cols="12" sm="6" md="3">
                         <v-card
-                          :elevation="form.days.includes(day) ? 4 : 1"
-                          :color="form.days.includes(day) ? 'primary' : 'white'"
-                          class="pa-4 text-center"
+                          :elevation="form.days.includes(day) ? 2 : 1"
+                          :class="['pa-4 text-center day-select-card', { 'day-selected': form.days.includes(day) }]"
                           style="cursor: pointer"
                           @click="toggleDay(day)"
                         >
@@ -56,16 +55,14 @@
                         </v-card>
                       </v-col>
                     </v-row>
-                    <v-sheet
-                      elevation="2"
-                      color="blue-lighten-5"
-                      rounded="lg"
-                      class="mt-4 pa-3 mx-auto text-center d-flex flex-column align-center justify-center"
-                      max-width="280"
-                    >
-                      <v-icon color="primary" size="24" class="mb-1">mdi-cash</v-icon>
-                      <div class="text-subtitle-2 font-weight-medium" :class="{ 'text-error': priceInfo.includes('valid') }">{{ priceInfo }}</div>
-                    </v-sheet>
+                    <div class="d-flex justify-center mt-4">
+                      <div
+                        :class="['price-tag', 
+              priceInfo.includes('valid') ? 'error' : 'success']"
+                      >
+                        {{ priceInfo }}
+                      </div>
+                    </div>
 
                     <v-btn class="mt-4 me-2" @click="step = 1">Back</v-btn>
                     <v-btn class="mt-4" color="primary" @click="step = 3">Continue</v-btn>
@@ -96,12 +93,12 @@
                       </v-col>
 
                       <v-col cols="12">
-                        <v-checkbox v-model="form.agreePolicies" required hide-details :label="''">
+                        <v-checkbox v-model="form.agreePolicies" required hide-details density="comfortable">
                           <template #label>
-                            <div>
+                            <span>
                               I agree to the
-                              <a href="#" @click.prevent="showPolicies = !showPolicies">Billing and Cancellation Policies</a>
-                            </div>
+                              <a href="#" @click.prevent="showPolicies = !showPolicies"> Billing and Cancellation Policies </a>
+                            </span>
                           </template>
                         </v-checkbox>
 
@@ -200,14 +197,6 @@
                             </v-col>
                             <v-col cols="6">
                               <v-text-field label="CVC" v-model="form.cvc" hint="3 or 4 digits" persistent-hint type="tel" required></v-text-field>
-                            </v-col>
-                          </v-row>
-
-                          <v-row class="mt-2 mb-2">
-                            <v-col cols="12" class="text-center">
-                              <v-img src="https://img.icons8.com/color/48/visa.png" height="24" class="me-2" />
-                              <v-img src="https://img.icons8.com/color/48/mastercard.png" height="24" class="me-2" />
-                              <v-img src="https://img.icons8.com/color/48/amex.png" height="24" />
                             </v-col>
                           </v-row>
                         </v-sheet>
