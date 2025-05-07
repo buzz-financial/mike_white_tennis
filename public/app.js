@@ -86,6 +86,15 @@ createApp({
         "WI",
         "WY",
       ],
+      rules: {
+        required: (v) => !!v || "This field is required",
+        email: (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+        phone: (v) => /^\d{10}$/.test(v.replace(/\D/g, "")) || "Enter a 10-digit phone number",
+        zip: (v) => /^\d{5}(-\d{4})?$/.test(v) || "ZIP must be 5 digits",
+        cardNumber: (v) => /^\d{13,19}$/.test(v.replace(/\s/g, "")) || "Invalid card number",
+        expiry: (v) => /^(0[1-9]|1[0-2])\/\d{2}$/.test(v) || "Use MM/YY format",
+        cvc: (v) => /^\d{3,4}$/.test(v) || "CVC must be 3 or 4 digits",
+      },
     };
   },
   computed: {

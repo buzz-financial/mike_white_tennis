@@ -1,13 +1,57 @@
+/* GENERAL FONT REFINEMENT */
 body {
   font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  color: #333;
+  line-height: 1.5;
 }
+
+/* TITLES AND HEADERS */
+.v-card-title,
+h3,
+h4 {
+  font-size: 1.3rem; /* Slightly larger than base text */
+  font-weight: 600;
+  color: #212121;
+}
+
+/* SUB-SECTION LABELS */
+h4.text-subtitle-1 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* FORM FIELD LABELS */
+.v-label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* INPUT FIELD TEXT */
+.v-input input {
+  font-size: 1rem;
+}
+
+/* PRICE & TOTAL INFO */
+.price-tag {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* TERMS + SMALL PRINT */
+.text-caption {
+  font-size: 0.75rem;
+  color: #666;
+}
+
 .logo-container {
   display: flex;
   justify-content: center;
   margin: 20px 0;
 }
 .logo-image {
-  max-width: 250px;
+  max-width: 350px;
   height: auto;
 }
 
@@ -99,4 +143,33 @@ body {
 /* Show checkmark icon when selected */
 .v-selection-control--dirty .v-icon {
   color: white !important;
+}
+
+/* Responsive Stepper Fix */
+@media (max-width: 600px) {
+  .v-stepper-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .v-stepper-item {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Step 4 Cleanup - Center Sections on Large Screens */
+@media (min-width: 960px) {
+  .billing-section,
+  .card-section,
+  .step-4-actions {
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Optional: Extra breathing room in step 4 */
+.v-sheet.mb-6 {
+  margin-bottom: 32px !important;
 }
