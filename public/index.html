@@ -55,6 +55,7 @@
                         </v-card>
                       </v-col>
                     </v-row>
+                    <div v-if="daySelectionError" class="text-error mt-2 text-center">{{ daySelectionError }}</div>
                     <div class="d-flex justify-center mt-4">
                       <div
                         :class="['price-tag', 
@@ -65,12 +66,12 @@
                     </div>
 
                     <v-btn class="mt-4 me-2" @click="step = 1">Back</v-btn>
-                    <v-btn class="mt-4" color="primary" @click="step = 3">Continue</v-btn>
+                    <v-btn class="mt-4" color="primary" @click="validateStep2AndContinue">Continue</v-btn>
                   </v-card>
                 </v-stepper-window-item>
 
                 <v-stepper-window-item :value="3">
-                  <v-form ref="step3Form" v-model="validStep3">
+                  <v-form ref="step3Form">
                     <v-card flat class="pa-4">
                       <v-card-title>Participant Info</v-card-title>
 
@@ -109,7 +110,24 @@
 
                           <v-expand-transition>
                             <div v-if="showPolicies" class="mt-2 pa-4 rounded elevation-1" style="background-color: #f9f9f9">
-                              <!-- Your policy text -->
+                              <p>
+                                BILLING AND CANCELLATIONS POLICY: Our Tennis program runs month to month. Notifications of canceling must be given in
+                                writing 30 days in advance. No credits are given for missed classes. Make up lessons can be scheduled with one of the
+                                coaches. Enrollment continues until the end of the session, or you withdraw from the program in writing. All payments
+                                must be processed before the first registration day. Non-Members must have a credit card on file. Non-members will be
+                                charged $5 per day they are registered for the tennis program.
+                              </p>
+                              <br />
+                              <p>
+                                I fully understand that my child has registered for Tennis programming at MWTA Bloomington. Registration requires full
+                                payment for the class/classes which I enroll before my child will be able to participate. I understand that overdue
+                                balances and fees will prevent my child from participating in classes. I give permission to MWTA Bloomington to use
+                                images of my child for marketing purposes and programs development. I recognize the fact that any activities involving
+                                on court activities creates the possibility of serious injury or death. I give permission for MWTA Bloomington
+                                employees to temporarily render first aid in case of emergency. I hereby and forever release MWTA Bloomington, its
+                                owners, agents, employees, and volunteers from any claims on any injuries which may be sustained while participating
+                                at MWTA Bloomington. I acknowledge these policies and accept these terms for my tennis player.
+                              </p>
                             </div>
                           </v-expand-transition>
                         </v-col>
@@ -127,16 +145,48 @@
 
                     <v-row>
                       <!-- Registration Summary -->
-                      <v-col cols="12" md="4" order="1" order-md="2">
-                        <v-slide-y-transition>
-                          <v-sheet elevation="4" rounded="lg" class="pa-4 mb-6" color="blue-lighten-5">
-                            <h3 class="text-h6 mb-3">Registration Summary</h3>
-                            <p><strong>Program:</strong> {{ programs.find(p => p.value === form.program)?.label }}</p>
-                            <p><strong>Days:</strong> {{ form.days.join(', ') }}</p>
-                            <p><strong>Participant:</strong> {{ form.firstName }} {{ form.lastName }}</p>
-                            <p><strong>Total:</strong> {{ priceInfo }}</p>
-                          </v-sheet>
-                        </v-slide-y-transition>
+                      <v-col cols="12" md="4" order="1" order-md="2" class="summary-col">
+                        <v-sheet elevation="6" rounded="xl" class="pa-6 mb-6 bg-white">
+                          <h3 class="text-h6 mb-4 d-flex align-center">
+                            <v-icon class="me-2" color="primary">mdi-receipt</v-icon>
+                            Registration Summary
+                          </h3>
+
+                          <div class="mb-3">
+                            <div class="d-flex justify-space-between">
+                              <span class="font-weight-medium">Program:</span>
+                              <span>{{ programs.find(p => p.value === form.program)?.label }}</span>
+                            </div>
+
+                            <div class="d-flex justify-space-between mt-2 align-start">
+                              <span class="font-weight-medium mt-1">Days Selected:</span>
+                              <span class="d-flex flex-wrap justify-end">
+                                <v-chip v-for="day in form.days" :key="day" size="small" class="me-1 mb-1" color="primary" variant="outlined">
+                                  {{ day }}
+                                </v-chip>
+                              </span>
+                            </div>
+
+                            <div class="d-flex justify-space-between mt-2">
+                              <span class="font-weight-medium">Participant:</span>
+                              <span>{{ form.firstName }} {{ form.lastName }}</span>
+                            </div>
+                          </div>
+
+                          <!-- <v-divider class="my-4" />
+
+                          <div class="d-flex justify-space-between text-h6 font-weight-bold">
+                            <span>Total</span>
+                            <span>{{ priceInfo.includes('Total:') ? priceInfo.replace('Total: ', '') : priceInfo }}</span>
+                          </div>
+
+                          <v-divider class="my-4" />
+
+                          <v-btn variant="tonal" size="small" color="primary" @click="step = 1" block>
+                            <v-icon start>mdi-pencil</v-icon>
+                            Edit Selection
+                          </v-btn> -->
+                        </v-sheet>
                       </v-col>
 
                       <!-- Billing + Card Info -->
@@ -180,7 +230,7 @@
                             <h4 class="text-subtitle-1 font-weight-medium mb-4"><v-icon start>mdi-credit-card-outline</v-icon> Card Information</h4>
                             <v-row>
                               <v-col cols="12">
-                                <v-text-field label="Name on Card" v-model="form.cardName" required />
+                                <v-text-field label="Name on Card" v-model="form.cardName" :rules="[rules.required]" required />
                               </v-col>
                               <v-col cols="12">
                                 <v-text-field

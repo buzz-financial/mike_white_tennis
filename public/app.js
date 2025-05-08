@@ -33,6 +33,7 @@ createApp({
         expiry: "",
         cvc: "",
       },
+      daySelectionError: "",
       showPolicies: false,
       states: [
         "AL",
@@ -120,6 +121,12 @@ createApp({
     },
   },
   methods: {
+    goToStep(stepNumber) {
+      if (stepNumber < this.step) {
+        this.step = stepNumber; // allow going backward
+      }
+    },
+
     toggleDay(day) {
       const index = this.form.days.indexOf(day);
       if (index === -1) {
@@ -129,8 +136,43 @@ createApp({
       }
     },
 
+    validateStep2AndContinue() {
+      const count = this.form.days.length;
+
+      // Reset error first
+      this.daySelectionError = "";
+
+      if (count === 0) {
+        this.daySelectionError = "Please select at least one day.";
+        return;
+      }
+
+      if (this.form.program === "academy" && count < 2) {
+        this.daySelectionError = "Academy requires at least 2 days.";
+        return;
+      }
+
+      this.step = 3;
+    },
+
+    validateStep3AndContinue() {
+      const form = this.$refs.step3Form;
+
+      if (form) {
+        form.validate().then((result) => {
+          if (result.valid) {
+            this.step = 4;
+          }
+        });
+      }
+    },
+
     submitForm() {
-      alert("Processing payment for: " + this.form.billingFirstName + " " + this.form.billingLastName);
+      console.log("Form submitted with the following data:");
+      console.log(JSON.stringify(this.form, null, 2));
+
+      // Optional visual feedback
+      alert("Submitted! Open dev tools to see the full data.");
     },
   },
 })
