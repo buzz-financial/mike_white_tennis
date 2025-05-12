@@ -35,6 +35,7 @@ createApp({
       },
       daySelectionError: "",
       showPolicies: false,
+      validStep3: false,
       states: [
         "AL",
         "AK",
@@ -161,6 +162,10 @@ createApp({
       if (form) {
         form.validate().then((result) => {
           if (result.valid) {
+            // Force reactivity to kick in
+            this.form.days = [...this.form.days];
+
+            // Proceed to step 4
             this.step = 4;
           }
         });
