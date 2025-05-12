@@ -1,3 +1,7 @@
+.test {
+  background-color: red;
+}
+
 /* GENERAL FONT REFINEMENT */
 body {
   font-family: "Roboto", sans-serif;
@@ -31,12 +35,6 @@ h4.text-subtitle-1 {
 /* INPUT FIELD TEXT */
 .v-input input {
   font-size: 1rem;
-}
-
-/* PRICE & TOTAL INFO */
-.price-tag {
-  font-size: 1rem;
-  font-weight: 600;
 }
 
 /* TERMS + SMALL PRINT */
@@ -84,8 +82,12 @@ h4.text-subtitle-1 {
   border-radius: 9999px;
   box-sizing: border-box;
   transition: all 0.2s ease;
-  font-weight: 500;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
   line-height: 1.2; /* slightly more natural */
   vertical-align: middle;
   text-align: center;
@@ -155,12 +157,18 @@ h4.text-subtitle-1 {
 }
 
 .text-h6 {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 600;
 }
 
 .font-weight-medium {
   font-weight: 500;
+}
+
+.summary-col .v-sheet {
+  border: 1px solid #ddd;
+  background-color: #fefefe;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.05);
 }
 
 /* Responsive Stepper Fix */
@@ -178,7 +186,7 @@ h4.text-subtitle-1 {
 
 @media (max-width: 959px) {
   .summary-col {
-    margin-bottom: 24px;
+    margin-bottom: 5px;
   }
 }
 
@@ -190,6 +198,11 @@ h4.text-subtitle-1 {
     max-width: 650px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .summary-col {
+    position: sticky;
+    top: 100px;
   }
 }
 

@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/vuetify@3.5.0/dist/vuetify.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@3.5.0/dist/vuetify.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -173,19 +173,21 @@
                             </div>
                           </div>
 
-                          <!-- <v-divider class="my-4" />
-
-                          <div class="d-flex justify-space-between text-h6 font-weight-bold">
-                            <span>Total</span>
-                            <span>{{ priceInfo.includes('Total:') ? priceInfo.replace('Total: ', '') : priceInfo }}</span>
-                          </div>
-
                           <v-divider class="my-4" />
 
-                          <v-btn variant="tonal" size="small" color="primary" @click="step = 1" block>
-                            <v-icon start>mdi-pencil</v-icon>
-                            Edit Selection
-                          </v-btn> -->
+                          <div class="test">
+                            <div class="d-flex justify-space-between text-h6 font-weight-bold">
+                              <span>Total</span>
+                              <span>{{ priceInfo.includes('Total:') ? priceInfo.replace('Total: ', '') : priceInfo }}</span>
+                            </div>
+
+                            <v-divider class="my-4" />
+
+                            <v-btn variant="tonal" size="small" color="primary" @click="step = 1" block>
+                              <v-icon start>mdi-pencil</v-icon>
+                              Edit Selection
+                            </v-btn>
+                          </div>
                         </v-sheet>
                       </v-col>
 
