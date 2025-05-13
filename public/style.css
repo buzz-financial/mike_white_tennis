@@ -1,17 +1,14 @@
-.test {
-  background-color: #f9f9f9;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  margin-top: 8px;
-}
-
 /* GENERAL FONT REFINEMENT */
 body {
   font-family: "Roboto", sans-serif;
   font-size: 15px;
   color: #333;
   line-height: 1.5;
+  overflow-x: hidden;
+}
+
+.card-section .v-sheet {
+  background-color: #f0f4f8; /* lighter than grey-lighten-5 */
 }
 
 /* TITLES AND HEADERS */
@@ -198,6 +195,18 @@ h4.text-subtitle-1 {
 @media (max-width: 959px) {
   .summary-col {
     margin-bottom: 5px;
+  }
+  .billing-section,
+  .card-section,
+  .step-4-actions {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .billing-section .v-sheet,
+  .card-section .v-sheet {
+    border-radius: 0 !important;
+    box-shadow: none !important;
   }
 }
 
