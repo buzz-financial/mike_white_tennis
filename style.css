@@ -1,360 +1,232 @@
-* {
-  box-sizing: border-box;
-}
-
+/* GENERAL FONT REFINEMENT */
 body {
-  background: #eef2f7;
-  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
   color: #333;
+  line-height: 1.5;
+  overflow-x: hidden;
 }
 
-.form-container {
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+.card-section .v-sheet {
+  background-color: #f0f4f8; /* lighter than grey-lighten-5 */
+}
+
+/* TITLES AND HEADERS */
+.v-card-title,
+h3,
+h4 {
+  font-size: 1.3rem; /* Slightly larger than base text */
+  font-weight: 600;
+  color: #212121;
+}
+
+/* SUB-SECTION LABELS */
+h4.text-subtitle-1 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* FORM FIELD LABELS */
+.v-label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* INPUT FIELD TEXT */
+.v-input input {
+  font-size: 1rem;
+}
+
+/* TERMS + SMALL PRINT */
+.text-caption {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.text-error {
+  color: #f44336;
+  font-size: 0.875rem;
 }
 
 .logo-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
-
 .logo-image {
-  max-width: 450px;
+  max-width: 350px;
   height: auto;
 }
 
-h1,
-h2 {
+.day-select-card.day-selected {
+  background-color: #e3f2fd; /* soft blue still */
+  border: 1.5px solid #1976d2; /* subtle but sharp border */
+  color: #1976d2 !important; /* readable text color */
   font-weight: 600;
-  color: #1e293b;
 }
 
-h2 {
-  margin-bottom: 20px;
+.day-select-card.day-selected .text-subtitle-1 {
+  color: #1976d2 !important; /* force override Vuetify's default white */
 }
 
-label {
-  font-weight: 500;
-  margin-bottom: 6px;
-  display: block;
-  color: #475569;
+.day-select-card.day-selected .v-icon {
+  color: #1976d2 !important;
 }
 
-.step-card {
-  background: #ffffff;
-  padding: 25px;
-  margin-bottom: 30px;
-  border-radius: 15px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-}
-
-#section-registration-information {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 30px;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-select {
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  padding: 14px;
-  font-size: 1rem;
-  background-color: white;
-}
-
-#billing-state {
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  padding: 14px;
-  font-size: 1rem;
-  background-color: white;
-}
-
-input[type="checkbox"] {
-  transform: scale(1.5);
-  margin-right: 8px;
-  accent-color: #4f46e5;
-  cursor: pointer;
-}
-
-input:focus {
-  outline: none;
-  border: 2px solid #6366f1;
-  box-shadow: 0 0 5px rgba(99, 102, 241, 0.3);
-}
-
-.day-checkbox {
-  display: block;
-  margin-bottom: 10px;
-}
-
-button {
-  width: 100%;
-  padding: 16px;
-  font-size: 1.2rem;
-  border-radius: 12px;
-  background: #4f46e5;
-  color: white;
-  transition: background 0.2s;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #4338ca;
-}
-
-.row-two {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.row-two input,
-.row-two div {
-  flex: 1;
-}
-
-#checkBox {
-  margin-top: 20px;
-}
-
-/* Updated Payment Section Styles */
-#section-payment {
-  max-width: 1100px;
-  margin: auto;
-}
-
-.payment-wrapper {
-  background: #f9fafb;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  margin-top: 20px;
-}
-
-.payment-columns {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.payment-form-column {
-  flex: 2;
-  background: #ffffff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.payment-summary-column {
-  flex: 1;
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  max-height: fit-content;
-  align-self: flex-start;
-}
-
-.payment-summary {
-  background: #f1f5f9;
-  padding: 20px;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.payment-summary h3 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: #1e293b;
+.price-tag {
+  display: flex; /* switched from inline-flex to flex */
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 9999px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  line-height: 1.2; /* slightly more natural */
+  vertical-align: middle;
   text-align: center;
 }
 
-.summary-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid #d1d5db;
+/* Fix spacing between icon and text */
+.price-tag .v-icon {
+  font-size: 20px;
+  margin-right: 8px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
 }
 
-.summary-label {
-  font-weight: 500;
-  color: #475569;
+/* 💚 Green (Success) */
+.price-tag.success {
+  background-color: #e6f4ea; /* lighter green background */
+  border: 1px solid #66bb6a; /* softened green border */
+  color: #388e3c;
 }
 
-.summary-value {
-  font-weight: 600;
-  color: #1e293b;
+/* ❤️ Red (Error) */
+.price-tag.error {
+  background-color: #fdecea; /* softer error red */
+  border: 1px solid #f44336;
+  color: #d32f2f;
 }
 
-.total-price {
-  color: #10b981;
-  font-size: 1.2rem;
+/* 💙 Default (Info) */
+.price-tag.info {
+  background-color: #e3f2fd;
+  border: 1px solid #1976d2;
+  color: #1976d2;
 }
 
-.billing-info,
-.card-info {
-  margin-bottom: 25px;
+.price-tag .v-icon {
+  font-size: 20px;
+  margin-right: 8px;
+  margin-top: 1px;
+  line-height: 1;
 }
 
-.billing-info,
-.card-info {
-  background: #f9fafb;
-  padding: 20px;
-  border-radius: 12px;
+/* Base checkbox styling */
+.v-selection-control__input {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  background-color: white;
+  transition: all 0.2s ease;
 }
 
-.billing-info h3,
-.card-info h3 {
-  margin-bottom: 15px;
+/* When checked, Vuetify adds .v-selection-control--dirty to the root wrapper */
+.v-selection-control--dirty .v-selection-control__input {
+  background-color: #1976d2;
+  border-color: #1976d2;
+}
+
+/* Show checkmark icon when selected */
+.v-selection-control--dirty .v-icon {
+  color: white !important;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.text-h6 {
   font-size: 1.25rem;
-  color: #1e293b;
-}
-
-.billing-info input,
-.card-info input {
-  width: 100%;
-  margin-bottom: 15px;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  font-size: 1rem;
-}
-
-.card-row {
-  display: flex;
-  gap: 12px;
-}
-
-.card-row .form-group {
-  flex: 1;
-}
-
-.payment-action {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 30px;
-}
-
-.payment-action button {
-  flex: 1;
-  font-size: 1rem;
-  padding: 12px 20px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-
-.last-back-button {
-  background-color: #e5e7eb;
-  color: #111827;
-}
-
-.last-back-button:hover {
-  background-color: #d1d5db;
-}
-
-.pay-button {
-  background-color: #4f46e5;
-  color: white;
-}
-
-.pay-button:hover {
-  background-color: #4338ca;
-}
-
-fieldset {
-  border: none;
-  padding: 0;
-  margin: 0 0 20px 0;
-}
-
-legend {
-  font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 10px;
-  color: #1e293b;
 }
 
-.hidden {
-  display: none;
+.font-weight-medium {
+  font-weight: 500;
 }
 
-input.invalid {
-  border: 2px solid #ef4444;
+.summary-col .v-sheet {
+  border: 1px solid #ddd;
+  background-color: #fefefe;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.05);
 }
 
-.error-message {
-  color: #ef4444;
-  font-size: 0.85rem;
-  margin-top: 4px;
-  margin-bottom: 6px;
-  display: none;
+.text-summary-footer {
+  background-color: #f8f9fa;
+  padding: 16px;
+  border-radius: 10px;
+  margin-top: 8px;
 }
 
-.summary-mobile {
-  display: none;
-}
-
-/* Responsive Tweaks */
-@media screen and (max-width: 768px) {
-  .payment-columns {
+/* Responsive Stepper Fix */
+@media (max-width: 600px) {
+  .v-stepper-header {
     flex-direction: column;
+    align-items: flex-start;
   }
 
-  .payment-summary-column {
-    margin-top: 30px;
+  .v-stepper-item {
     width: 100%;
-  }
-
-  .summary-mobile {
-    display: block;
-    margin-bottom: 30px;
-  }
-
-  .summary-sidebar {
-    display: none;
+    justify-content: flex-start;
   }
 }
 
-@media screen and (max-width: 600px) {
-  .form-container {
-    padding: 15px;
+@media (max-width: 959px) {
+  .summary-col {
+    margin-bottom: 5px;
+  }
+  .billing-section,
+  .card-section,
+  .step-4-actions {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
-  .logo-image {
-    max-width: 50%;
+  .billing-section .v-sheet,
+  .card-section .v-sheet {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Step 4 Cleanup - Center Sections on Large Screens */
+@media (min-width: 960px) {
+  .billing-section,
+  .card-section,
+  .step-4-actions {
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .row-two {
-    flex-direction: column;
+  .summary-col {
+    position: relative;
+    top: auto;
   }
+}
 
-  .card-row {
-    flex-direction: column;
-  }
-
-  .form-group {
-    width: 100%;
-  }
-
-  .payment-action button {
-    width: 100%;
-    margin-top: 10px;
-  }
-
-  .payment-wrapper {
-    padding: 20px;
-  }
+/* Optional: Extra breathing room in step 4 */
+.v-sheet.mb-6 {
+  margin-bottom: 32px !important;
 }

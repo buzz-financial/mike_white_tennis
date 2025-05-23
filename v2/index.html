@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MWTA Tennis Registration</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+    <script>
+      // Format card number
+      new Cleave("#card-number", {
+        creditCard: true,
+      });
+
+      // Format expiry date
+      new Cleave("#expiry-date", {
+        date: true,
+        datePattern: ["m", "y"],
+      });
+
+      // Optional: restrict CVC to 3 digits only
+      new Cleave("#cvc", {
+        numeral: true,
+        numeralPositiveOnly: true,
+        numeralIntegerScale: 4,
+      });
+    </script>
+  </head>
+  <body>
+    <div class="form-container">
+      <div class="logo-container">
+        <img src="mike-white-logo-horizontal-blue.png" alt="MWTA Logo" class="logo-image" />
+      </div>
+      <form id="tennisForm">
+        <div class="section" id="section-registration-information">
+          <h1>Junior Program Registration</h1>
+          <div id="section-program" class="step-card">
+            <label for="program"><h2>Step 1: Choose a Program</h2></label>
+            <select id="program" name="program" required>
+              <option value="">-- Select --</option>
+              <option value="champions">Champions (Age ≤12)</option>
+              <option value="peewee">Pee Wee (Age 5–10)</option>
+              <option value="elite">Elite (In/Near High School)</option>
+              <option value="academy">Academy (Invite Only)</option>
+            </select>
+            <!-- <div class="price-info" id="price-blurb"></div> -->
+          </div>
+
+          <!-- CHOOSE DAYS -->
+          <div class="section hidden step-card" id="section-details">
+            <h2>Step 2: Select Days</h2>
+
+            <div id="champions-days" class="program-days hidden">
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday" /> Tuesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday" /> Thursday</label>
+              <br />
+              <div class="price-info">1 day: $129 | 2 days: $199 | 3 days: $289 | 4 days: $389</div>
+            </div>
+
+            <div id="peewee-days" class="program-days hidden">
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
+              <br />
+              <div class="price-info">1 day: $69 | 2 days: $125</div>
+            </div>
+
+            <div id="elite-days" class="program-days hidden">
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday" /> Tuesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday" /> Thursday</label>
+              <br />
+              <div class="price-info">1 day: $189 | 2 days: $269 | 3 days: $389 | 4 days: $499</div>
+            </div>
+
+            <div id="academy-days" class="program-days hidden">
+              <p><strong>Note:</strong> Must have coach permission and active tournament participation.</p>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Monday" /> Monday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Tuesday" /> Tuesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Wednesday" /> Wednesday</label>
+              <label class="day-checkbox"><input type="checkbox" name="days" value="Thursday" /> Thursday</label>
+              <br />
+              <div class="price-info">2 days: $329 | 3 days: $469 | 4 days: $599</div>
+            </div>
+          </div>
+
+          <!-- PARTICIPANT INFO -->
+          <div class="section hidden step-card" id="section-info">
+            <h2>Step 3: Participant Info</h2>
+            <div class="row-two">
+              <div>
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" />
+                <div class="error-message" id="error-firstName">This field is required.</div>
+              </div>
+
+              <div>
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required />
+                <div class="error-message" id="error-lastName"></div>
+              </div>
+            </div>
+
+            <div class="row-two">
+              <div>
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required />
+                <div class="error-message" id="error-phone"></div>
+              </div>
+
+              <div>
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required />
+                <div class="error-message" id="error-email"></div>
+              </div>
+            </div>
+
+            <label for="responsibleParty">Responsible Party Name</label>
+            <input type="text" id="responsibleParty" name="responsibleParty" required />
+            <div class="error-message" id="error-responsibleParty"></div>
+
+            <label>
+              <input id="checkBox" type="checkbox" required />
+              I agree to the <a href="#" onclick="togglePolicies(event, 'policies-text')">Billing and Cancellation Policies</a>
+            </label>
+
+            <div id="policies-text" class="hidden">
+              <p>
+                BILLING AND CANCELLATIONS POLICY: Our Tennis program runs month to month. Notifications of canceling must be given in writing 30 days
+                in advance. No credits are given for missed classes. Make up lessons can be scheduled with one of the coaches. Enrollment continues
+                until the end of the session, or you withdraw from the program in writing. All payments must be processed before the first
+                registration day. Non-Members must have a credit card on file. Non-members will be charged $5 per day they are registered for the
+                tennis program.
+              </p>
+              <p>
+                I fully understand that my child has registered for Tennis programming at MWTA Bloomington. Registration requires full payment for the
+                class/classes which I enroll before my child will be able to participate. I understand that overdue balances and fees will prevent my
+                child from participating in classes. I give permission to MWTA Bloomington to use images of my child for marketing purposes and
+                programs development. I recognize the fact that any activities involving on court activities creates the possibility of serious injury
+                or death. I give permission for MWTA Bloomington employees to temporarily render first aid in case of emergency. I hereby and forever
+                release MWTA Bloomington, its owners, agents, employees, and volunteers from any claims on any injuries which may be sustained while
+                participating at MWTA Bloomington. I acknowledge these policies and accept these terms for my tennis player.
+              </p>
+            </div>
+
+            <button type="button" onclick="goToSection('section-payment')">Continue to Checkout</button>
+          </div>
+        </div>
+
+        <!-- Section 5: Payment -->
+        <div class="payment-wrapper hidden" id="section-payment">
+          <h2>Step 4: Payment</h2>
+
+          <div class="payment-columns">
+            <!-- LEFT COLUMN: Form Fields -->
+            <div class="payment-form-column">
+              <fieldset class="billing-info">
+                <legend><h3>Billing Information</h3></legend>
+
+                <div class="row-two">
+                  <div>
+                    <label for="billing-first-name">First Name</label>
+                    <input type="text" id="billing-first-name" required />
+                    <div class="error-message" id="error-billing-first-name"></div>
+                  </div>
+                  <div>
+                    <label for="billing-last-name">Last Name</label>
+                    <input type="text" id="billing-last-name" required />
+                    <div class="error-message" id="error-billing-last-name"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="billing-address">Street Address</label>
+                  <input type="text" id="billing-address" required />
+                  <div class="error-message" id="error-billing-address"></div>
+                </div>
+
+                <div class="row-two">
+                  <div>
+                    <label for="billing-city">City</label>
+                    <input type="text" id="billing-city" required />
+                    <div class="error-message" id="error-billing-city"></div>
+                  </div>
+                  <div>
+                    <select id="billing-state" required>
+                      <option value="">State</option>
+                      <option value="">Select a State</option>
+                      <option value="AL">Alabama</option>
+                      <option value="AK">Alaska</option>
+                      <option value="AZ">Arizona</option>
+                      <option value="AR">Arkansas</option>
+                      <option value="CA">California</option>
+                      <option value="CO">Colorado</option>
+                      <option value="CT">Connecticut</option>
+                      <option value="DE">Delaware</option>
+                      <option value="FL">Florida</option>
+                      <option value="GA">Georgia</option>
+                      <option value="HI">Hawaii</option>
+                      <option value="ID">Idaho</option>
+                      <option value="IL">Illinois</option>
+                      <option value="IN">Indiana</option>
+                      <option value="IA">Iowa</option>
+                      <option value="KS">Kansas</option>
+                      <option value="KY">Kentucky</option>
+                      <option value="LA">Louisiana</option>
+                      <option value="ME">Maine</option>
+                      <option value="MD">Maryland</option>
+                      <option value="MA">Massachusetts</option>
+                      <option value="MI">Michigan</option>
+                      <option value="MN">Minnesota</option>
+                      <option value="MS">Mississippi</option>
+                      <option value="MO">Missouri</option>
+                      <option value="MT">Montana</option>
+                      <option value="NE">Nebraska</option>
+                      <option value="NV">Nevada</option>
+                      <option value="NH">New Hampshire</option>
+                      <option value="NJ">New Jersey</option>
+                      <option value="NM">New Mexico</option>
+                      <option value="NY">New York</option>
+                      <option value="NC">North Carolina</option>
+                      <option value="ND">North Dakota</option>
+                      <option value="OH">Ohio</option>
+                      <option value="OK">Oklahoma</option>
+                      <option value="OR">Oregon</option>
+                      <option value="PA">Pennsylvania</option>
+                      <option value="RI">Rhode Island</option>
+                      <option value="SC">South Carolina</option>
+                      <option value="SD">South Dakota</option>
+                      <option value="TN">Tennessee</option>
+                      <option value="TX">Texas</option>
+                      <option value="UT">Utah</option>
+                      <option value="VT">Vermont</option>
+                      <option value="VA">Virginia</option>
+                      <option value="WA">Washington</option>
+                      <option value="WV">West Virginia</option>
+                      <option value="WI">Wisconsin</option>
+                      <option value="WY">Wyoming</option>
+                    </select>
+                    <div class="error-message" id="error-billing-state"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="billing-postal">ZIP Code</label>
+                  <input type="text" id="billing-postal" required />
+                  <div class="error-message" id="error-billing-postal"></div>
+                </div>
+              </fieldset>
+
+              <fieldset class="card-info">
+                <legend><h3>Card Information</h3></legend>
+
+                <input type="text" id="full-name" placeholder="Name on Card" required />
+                <div class="error-message" id="error-full-name"></div>
+
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" required />
+                <div class="error-message" id="error-card-number"></div>
+
+                <div class="card-row">
+                  <div class="form-group">
+                    <label for="expiry-date">Expiry</label>
+                    <input type="text" id="expiry-date" placeholder="MM/YY" required />
+                    <div class="error-message" id="error-expiry-date"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="cvc">CVC</label>
+                    <input type="text" id="cvc" placeholder="•••" required />
+                    <div class="error-message" id="error-cvc"></div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <div class="payment-action">
+                <button type="button" id="back-to-info" class="last-back-button">Back</button>
+                <button type="submit" id="pay-now" class="pay-button">Pay Now</button>
+              </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Payment Summary -->
+            <aside class="payment-summary-column">
+              <div class="payment-summary">
+                <h3>🧾 Registration Summary</h3>
+                <div class="summary-item">
+                  <span class="summary-label">Program:</span>
+                  <span id="summary-program" class="summary-value">-</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Days:</span>
+                  <span id="summary-days" class="summary-value">-</span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label">Total:</span>
+                  <span id="summary-price" class="summary-value total-price">-</span>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
